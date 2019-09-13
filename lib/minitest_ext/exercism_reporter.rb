@@ -11,12 +11,9 @@ module MiniTest
     end
 
     def start
-      p "Starting"
     end
 
     def record(result)
-      p result
-
       status = result.failures.size == 0 ? :pass : :fail
 
       test = {
@@ -39,7 +36,6 @@ module MiniTest
     end
 
     def exception_raised!(e)
-      p "HERE!!"
       WriteReport.(path, :error, error: e.full_message)
     end
 

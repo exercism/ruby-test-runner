@@ -26,8 +26,6 @@ class TestRunner
     Minitest.extensions << "exercism"
     Minitest::Test.use_order_dependent_tests!
 
-    p path_to_tests + "/iteration/*_test.rb"
-    p Dir.glob(path_to_tests + "/iteration/*_test.rb")
     Dir.glob(path_to_tests + "/iteration/*_test.rb").each do |test_file|
       begin
         require test_file
