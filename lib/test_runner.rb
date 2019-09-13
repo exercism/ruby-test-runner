@@ -1,8 +1,8 @@
 gem 'minitest'
 require "minitest/autorun"
 
-require_relative "minitest/exercism_reporter"
-require_relative "minitest/exercism_plugin"
+require_relative "minitest_ext/exercism_reporter"
+require_relative "minitest_ext/exercism_plugin"
 
 module Minitest
   module Assertions
@@ -24,13 +24,18 @@ module Minitest
 end
 
 class TestRunner
-
-  def self.run(exercise, dir)
+  def self.run(exercise, path_to_tests)
     Minitest.extensions << "exercism"
     Minitest::Test.use_order_dependent_tests!
 
-    path_to_tests = File.expand_path(File.dirname(__FILE__)) + "/../test/fixtures/#{solution_id}/two_fer_test.rb"
-    require path_to_tests
+    Dir.glob(path_to_tests + "/*_test.rb").each do |test_file|
+      begin
+        require test_file
+      rescue => e
+        ExercismReporter.exception_raised!(e)
+        raise e
+      end
+    end
   end
 end
 

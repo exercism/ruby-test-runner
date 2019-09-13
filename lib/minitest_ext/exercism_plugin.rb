@@ -3,15 +3,13 @@ module Minitest
   end
 
   def self.plugin_exercism_init(*args)
-
     self.reporter.reporters.grep(Minitest::Reporter).each do |rep|
-      #rep.io = File.open(File::NULL, "w")
+      rep.io = File.open(File::NULL, "w")
     end
     self.reporter << ExercismReporter.new(*args)
   end
 
   module ExercismPlugin
-
     def before_setup
       super
     end
