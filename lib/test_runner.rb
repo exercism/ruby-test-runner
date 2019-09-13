@@ -1,42 +1,43 @@
+require 'mandate'
+require 'json'
+
 gem 'minitest'
 require "minitest/autorun"
 
-require_relative "minitest_ext/exercism_reporter"
+require_relative "write_report"
+
 require_relative "minitest_ext/exercism_plugin"
-
-module Minitest
-  module Assertions
-    undef_method :skip if method_defined? :skip
-
-    def skip
-      # Noop
-    end
-  end
-
-  class Test
-    include ExercismPlugin
-
-    class << self
-      # Nobody sucks, OK?
-      alias_method :use_order_dependent_tests!, :i_suck_and_my_tests_are_order_dependent!
-    end
-  end
-end
+require_relative "minitest_ext/exercism_reporter"
+require_relative "minitest_ext/minitest"
 
 class TestRunner
-  def self.run(exercise, path_to_tests)
+  def self.run(*args)
+    new(*args).run
+  end
+
+  attr_reader :exercise, :path_to_tests
+  def initialize(exercise, path_to_tests)
+    @exercise = exercise
+    @path_to_tests = path_to_tests
+    @reporter = MiniTest::ExercismReporter.init(exercise, path_to_tests)
+  end
+
+  def run
     Minitest.extensions << "exercism"
     Minitest::Test.use_order_dependent_tests!
 
-    Dir.glob(path_to_tests + "/*_test.rb").each do |test_file|
+    p path_to_tests + "/iteration/*_test.rb"
+    p Dir.glob(path_to_tests + "/iteration/*_test.rb")
+    Dir.glob(path_to_tests + "/iteration/*_test.rb").each do |test_file|
       begin
         require test_file
       rescue => e
-        ExercismReporter.exception_raised!(e)
+        reporter.exception_raised!(e)
         raise e
       end
     end
   end
-end
 
-#TestRunner.run("two-fer", "pass")
+  private
+  attr_reader :reporter
+end

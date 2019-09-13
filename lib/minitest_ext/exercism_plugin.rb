@@ -6,7 +6,7 @@ module Minitest
     self.reporter.reporters.grep(Minitest::Reporter).each do |rep|
       rep.io = File.open(File::NULL, "w")
     end
-    self.reporter << ExercismReporter.new(*args)
+    self.reporter << ExercismReporter.instance
   end
 
   module ExercismPlugin

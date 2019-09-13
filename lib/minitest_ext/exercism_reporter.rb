@@ -1,28 +1,42 @@
-class ExercismReporter < MiniTest::AbstractReporter
-  attr_accessor :results
+module MiniTest
+  class ExercismReporter < AbstractReporter
+    class << self
+      attr_reader :instance
+    end
 
-  def initialize(io = $stdout, options = {})
-    self.results = []
-  end
+    def self.init(*args)
+      raise "Instance already defined" if @instance
 
-  def start
-    p "Starting"
-  end
+      @instance = new(*args)
+    end
 
-  def record(result)
-    p result
-    self.results << result
-  end
+    def start
+      p "Starting"
+    end
 
-  def report
-    p "Reporting"
-  end
+    def record(result)
+      p result
+      #self.results << result
+    end
 
-  def passed?
-  end
+    def report
+      WriteReport.(path, :unknown)
+      p "Reporting"
+    end
 
-  def self.exception_raised!(e)
-    # Handle the exception
-    #p e
+    def passed?
+    end
+
+    def exception_raised!(e)
+      p "HERE!!"
+      WriteReport.(path, :error, error: e.full_message)
+    end
+
+    private
+    attr_reader :exercise, :path, :results
+    def initialize(exercise, path)
+      @exercise = exercise
+      @path = path
+    end
   end
 end
