@@ -16,15 +16,26 @@ module MiniTest
 
     def record(result)
       p result
-      #self.results << result
+
+      status = result.failures.size == 0 ? :pass : :fail
+
+      test = {
+        name: result.name,
+        status: status,
+      }
+      test[:message] = result.failures.first if result.failures.size > 0
+      tests << test
     end
 
     def report
-      WriteReport.(path, :unknown)
-      p "Reporting"
+      WriteReport.(path, status, tests: tests)
     end
 
     def passed?
+    end
+
+    def status
+      tests.all?{|t|t[:status] == :pass} ? :pass : :fail
     end
 
     def exception_raised!(e)
@@ -33,10 +44,11 @@ module MiniTest
     end
 
     private
-    attr_reader :exercise, :path, :results
+    attr_reader :exercise, :path, :results, :tests
     def initialize(exercise, path)
       @exercise = exercise
       @path = path
+      @tests = []
     end
   end
 end

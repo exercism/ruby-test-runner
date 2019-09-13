@@ -13,9 +13,26 @@ class TestRunnerTest < Minitest::Test
 
   def test_pass
     assert_fixture(:pass, {
-      status: :unknown,
+      status: :pass,
       error: nil,
-      tests: []
+      tests: [
+        {name: :test_a_name_given, status: :pass},
+        {name: :test_another_name_given, status: :pass},
+        {name: :test_no_name_given, status: :pass}
+      ]
     })
   end
+
+  def test_fail
+    assert_fixture(:fail, {
+      status: :fail,
+      error: nil,
+      tests: [
+        {name: :test_a_name_given, status: :pass},
+        {name: :test_another_name_given, status: :pass},
+        {name: :test_no_name_given, status: :fail, message: %Q{Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"}}
+      ]
+    })
+  end
+
 end
