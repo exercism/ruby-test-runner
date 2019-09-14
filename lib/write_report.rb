@@ -1,11 +1,11 @@
 class WriteReport
   include Mandate
 
-  def initialize(path, status, tests: [], error: nil)
+  def initialize(path, status, tests: [], message: nil)
     @path = path
     @status = status
     @tests = tests
-    @error = error
+    @message = message
   end
 
   def call
@@ -13,11 +13,11 @@ class WriteReport
   end
 
   private
-  attr_reader :path, :status, :error, :tests
+  attr_reader :path, :status, :message, :tests
   def json
     {
       status: status,
-      error: error,
+      message: message,
       tests: tests
     }.to_json
   end

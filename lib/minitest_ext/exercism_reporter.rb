@@ -33,7 +33,7 @@ module MiniTest
     end
 
     def exception_raised!(e)
-      WriteReport.(path, :error, error: e.full_message)
+      WriteReport.(path, :message, message: e.full_message)
     end
 
     private
