@@ -27,7 +27,7 @@ class TestRunnerTest < Minitest::Test
 
   def test_exception
     with_tmp_dir_for_fixture(:exception) do |path|
-      actual = JSON.parse(File.read(path / "report.json"))
+      actual = JSON.parse(File.read(path / "results.json"))
       assert_equal "error", actual["status"]
 
       assert actual['error'].include?(%q{undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)})

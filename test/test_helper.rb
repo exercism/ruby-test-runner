@@ -14,7 +14,7 @@ class Minitest::Test
 
   def assert_fixture(fixture, expected)
     with_tmp_dir_for_fixture(fixture) do |path|
-      actual = JSON.parse(File.read(path / "report.json"))
+      actual = JSON.parse(File.read(path / "results.json"))
       assert_equal JSON.parse(expected.to_json), actual
     end
   end

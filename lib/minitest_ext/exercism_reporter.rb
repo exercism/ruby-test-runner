@@ -28,9 +28,6 @@ module MiniTest
       WriteReport.(path, status, tests: tests)
     end
 
-    def passed?
-    end
-
     def status
       tests.all?{|t|t[:status] == :pass} ? :pass : :fail
     end

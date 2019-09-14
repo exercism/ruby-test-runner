@@ -9,7 +9,7 @@ class WriteReport
   end
 
   def call
-    File.write("#{path}/report.json", json)
+    File.write("#{path}/results.json", json)
   end
 
   private
