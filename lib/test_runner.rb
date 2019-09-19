@@ -15,18 +15,18 @@ class TestRunner
     new(*args).run
   end
 
-  attr_reader :exercise, :path_to_tests
-  def initialize(exercise, path_to_tests)
+  attr_reader :exercise, :input_path
+  def initialize(exercise, input_path, output_path)
     @exercise = exercise
-    @path_to_tests = path_to_tests
-    @reporter = MiniTest::ExercismReporter.init(exercise, path_to_tests)
+    @input_path = input_path
+    @reporter = MiniTest::ExercismReporter.init(exercise, output_path)
   end
 
   def run
     Minitest.extensions << "exercism"
     Minitest::Test.use_order_dependent_tests!
 
-    Dir.glob(path_to_tests + "/iteration/*_test.rb").each do |test_file|
+    Dir.glob(input_path + "/*_test.rb").each do |test_file|
       begin
         require test_file
       rescue => e

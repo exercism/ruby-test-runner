@@ -13,8 +13,8 @@ end
 class Minitest::Test
 
   def assert_fixture(fixture, expected)
-    with_tmp_dir_for_fixture(fixture) do |path|
-      actual = JSON.parse(File.read(path / "results.json"))
+    with_tmp_dir_for_fixture(fixture) do |input_dir, output_dir|
+      actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal JSON.parse(expected.to_json), actual
     end
   end
@@ -22,23 +22,26 @@ class Minitest::Test
   def with_tmp_dir_for_fixture(fixture)
     original_path = File.expand_path(File.dirname(__FILE__)) + "/fixtures/#{fixture}/"
     tmp_path = SAFE_WRITE_PATH / SecureRandom.uuid
-    FileUtils.mkdir(tmp_path)
-    FileUtils.cp_r(original_path + "iteration/", tmp_path)
+    input_dir = tmp_path / "input"
+    output_dir = tmp_path / "output"
+    FileUtils.mkdir_p(input_dir)
+    FileUtils.mkdir_p(output_dir)
+    FileUtils.copy_entry(original_path + "input", input_dir)
 
     begin
-      run_test_runner(tmp_path)
-      yield(tmp_path)
+      run_test_runner(input_dir, output_dir)
+      yield(input_dir, output_dir)
     ensure
       FileUtils.rm_f(tmp_path)
     end
   end
 
-  def run_test_runner(dir)
+  def run_test_runner(input_dir, output_dir)
     # Testing commands
-    #exec("bin/run.sh two_fer #{dir}")
-    #system("bin/run.sh two_fer #{dir}")
+    #exec("bin/run.sh two_fer #{input_dir} #{output_dir}")
+    #system("bin/run.sh two_fer #{input_dir} #{output_dir}")
 
     # Main command
-    system("bin/run.sh two_fer #{dir}", out: "/dev/null", err: "/dev/null")
+    system("bin/run.sh two_fer #{input_dir} #{output_dir}", out: "/dev/null", err: "/dev/null")
   end
 end
