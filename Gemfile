@@ -8,7 +8,6 @@ end
 gem 'mandate'
 gem 'rake'
 gem 'json'
-gem 'mandate'
 gem 'minitest', '~> 5.11.3'
 
 group :test do
