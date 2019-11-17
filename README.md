@@ -9,4 +9,3 @@ For example:
 ```bash
 ./bin/run.sh two_fer ~/solution-238382y7sds7fsadfasj23j/
 ```
-
