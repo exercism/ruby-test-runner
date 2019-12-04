@@ -20,7 +20,7 @@ class TestRunnerTest < Minitest::Test
       tests: [
         {name: :test_a_name_given, status: :pass},
         {name: :test_another_name_given, status: :pass},
-        {name: :test_no_name_given, status: :fail, message: %Q{Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"}}
+        {name: :test_no_name_given, status: :fail, message: %Q{We tried running TwoFer.two_fer but received an unexpected result.\nExpected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"}}
       ]
     })
   end
