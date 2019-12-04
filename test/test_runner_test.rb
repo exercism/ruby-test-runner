@@ -28,7 +28,7 @@ class TestRunnerTest < Minitest::Test
   def test_exception
     with_tmp_dir_for_fixture(:exception) do |input_dir, output_dir|
       actual = JSON.parse(File.read(output_dir / "results.json"))
-      assert_equal "message", actual["status"]
+      assert_equal "error", actual["status"]
 
       assert actual['message'].include?(%q{undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)})
       assert actual['message'].include?(%Q{\n\tfrom bin/run.rb:3:in `<main>'\n})
