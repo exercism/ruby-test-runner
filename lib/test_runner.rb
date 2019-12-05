@@ -29,7 +29,7 @@ class TestRunner
     Dir.glob(input_path + "/*_test.rb").each do |test_file|
       begin
         require test_file
-      rescue => e
+      rescue StandardError, SyntaxError => e
         reporter.exception_raised!(e)
         raise e
       end
