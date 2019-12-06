@@ -14,13 +14,21 @@ module MiniTest
     end
 
     def record(result)
-      status = result.failures.size == 0 ? :pass : :fail
+      if result.failures.size == 0
+        test = {
+          status: :pass,
+          name: result.name,
+        }
+      else
+        message = result.error?? ExtractFailureErrorMessage.(result.failure) :
+                                 result.failure.to_s
+        test = {
+          status: :fail,
+          name: result.name,
+          message: message
+        }
+      end
 
-      test = {
-        name: result.name,
-        status: status,
-      }
-      test[:message] = result.failures.first if result.failures.size > 0
       tests << test
     end
 
@@ -33,12 +41,12 @@ module MiniTest
     end
 
     def exception_raised!(e)
-      message = 
-        if e.is_a?(SyntaxError)
-          "Line #{e.message.split(":").tap(&:shift).join(":")}"
+      message =
+        case e
+        when SyntaxError
+          ExtractSyntaxExceptionErrorMessage.(e)
         else
-          line = e.backtrace_locations.first.to_s.split(":")[1]
-          "Line #{line}: #{e.message} (#{e.class.name})"
+          ExtractStandardExceptionErrorMessage.(e)
         end
 
       WriteReport.(path, :error, message: message)
