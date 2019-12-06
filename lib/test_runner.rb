@@ -6,6 +6,10 @@ require "minitest/autorun"
 
 require_relative "write_report"
 
+require_relative "minitest_ext/extract_standard_exception_error_message"
+require_relative "minitest_ext/extract_syntax_exception_error_message"
+require_relative "minitest_ext/extract_failure_error_message"
+
 require_relative "minitest_ext/exercism_plugin"
 require_relative "minitest_ext/exercism_reporter"
 require_relative "minitest_ext/minitest"

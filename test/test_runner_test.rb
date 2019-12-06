@@ -25,7 +25,26 @@ class TestRunnerTest < Minitest::Test
     })
   end
 
-  def test_exception
+  def test_deep_exception
+    message = %q{
+NoMethodError: undefined method `non_existant_method' for nil:NilClass
+
+Traceback (most recent call first):
+    Line 8:in `work_out_name'
+    Line 3:in `two_fer'
+}.strip
+
+    assert_fixture(:deep_exception, {
+      status: :fail,
+      message: nil,
+      tests: [
+        {name: :test_no_name_given, status: :fail, message: message}
+      ]
+    })
+  end
+
+
+  def test_name_error_exception
     with_tmp_dir_for_fixture(:exception) do |input_dir, output_dir|
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
