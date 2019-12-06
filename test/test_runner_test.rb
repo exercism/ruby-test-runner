@@ -30,8 +30,7 @@ class TestRunnerTest < Minitest::Test
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
 
-      assert actual['message'].include?(%q{undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)})
-      assert actual['message'].include?(%Q{\n\tfrom bin/run.rb:3:in `<main>'\n})
+      assert_equal %q{Line 3: undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)}, actual['message']
     end
   end
 
@@ -39,9 +38,13 @@ class TestRunnerTest < Minitest::Test
     with_tmp_dir_for_fixture(:syntax_error_in_tests) do |input_dir, output_dir|
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
+      expected = <<EOS
+Line 3: syntax error, unexpected ',', expecting end-of-input
+,This is a comma
+^
+EOS
 
-      assert actual['message'].include?(%q{expecting end-of-input (SyntaxError)})
-      assert actual['message'].include?(%Q{\n\tfrom bin/run.rb:3:in `<main>'\n})
+      assert_equal expected.strip, actual['message']
     end
   end
 
@@ -50,8 +53,12 @@ class TestRunnerTest < Minitest::Test
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
 
-      assert actual['message'].include?(%q{expecting end-of-input (SyntaxError)})
-      assert actual['message'].include?(%Q{\n\tfrom bin/run.rb:3:in `<main>'\n})
+      expected = <<EOS
+Line 2: syntax error, unexpected ',', expecting end-of-input
+end,A stray comma
+   ^
+EOS
+      assert_equal expected.strip, actual['message']
     end
   end
 end
