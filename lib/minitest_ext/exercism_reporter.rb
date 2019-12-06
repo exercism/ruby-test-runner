@@ -33,7 +33,15 @@ module MiniTest
     end
 
     def exception_raised!(e)
-      WriteReport.(path, :error, message: e.full_message)
+      message = 
+        if e.is_a?(SyntaxError)
+          "Line #{e.message.split(":").tap(&:shift).join(":")}"
+        else
+          line = e.backtrace_locations.first.to_s.split(":")[1]
+          "Line #{line}: #{e.message} (#{e.class.name})"
+        end
+
+      WriteReport.(path, :error, message: message)
     end
 
     private
