@@ -17,6 +17,15 @@ class Minitest::Test
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal JSON.parse(expected.to_json), actual
     end
+    assert_test_run_exited_cleanly
+  end
+
+  def assert_test_run_exited_cleanly
+    assert_equal 0, $?.exitstatus
+  end
+
+  def refute_test_run_exited_cleanly
+    refute_equal 0, $?.exitstatus
   end
 
   def with_tmp_dir_for_fixture(fixture)
@@ -42,6 +51,6 @@ class Minitest::Test
     #system("bin/run.sh two_fer #{input_dir} #{output_dir}")
 
     # Main command
-    system("bin/run.sh two_fer #{input_dir} #{output_dir}", out: "/dev/null", err: "/dev/null")
+    system("bin/run.sh two_fer #{input_dir} #{output_dir}")#, out: "/dev/null", err: "/dev/null")
   end
 end

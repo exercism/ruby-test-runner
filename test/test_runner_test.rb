@@ -43,13 +43,14 @@ Traceback (most recent call first):
     })
   end
 
-
   def test_name_error_exception
     with_tmp_dir_for_fixture(:exception) do |input_dir, output_dir|
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
 
       assert_equal %q{Line 3: undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)}, actual['message']
+
+      assert_test_run_exited_cleanly
     end
   end
 
@@ -64,6 +65,8 @@ Line 3: syntax error, unexpected ',', expecting end-of-input
 EOS
 
       assert_equal expected.strip, actual['message']
+
+      assert_test_run_exited_cleanly
     end
   end
 
@@ -78,6 +81,15 @@ end,A stray comma
    ^
 EOS
       assert_equal expected.strip, actual['message']
+
+      assert_test_run_exited_cleanly
     end
+  end
+
+  def test_really_bad_things_exit_uncleanly
+    # I have no idea how to make this work, but
+    # it seems like a important test to have
+    #WriteReport.stubs(:new).raises("Something really bad!")
+    #refute_test_run_exited_cleanly
   end
 end

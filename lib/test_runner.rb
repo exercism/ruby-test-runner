@@ -35,7 +35,7 @@ class TestRunner
         require test_file
       rescue StandardError, SyntaxError => e
         reporter.exception_raised!(e)
-        raise e
+        return
       end
     end
   end

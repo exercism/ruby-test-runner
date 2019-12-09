@@ -10,6 +10,10 @@ module MiniTest
       @instance = new(*args)
     end
 
+    def initialize
+      @report_written = false
+    end
+
     def start
     end
 
@@ -33,7 +37,7 @@ module MiniTest
     end
 
     def report
-      WriteReport.(path, status, tests: tests)
+      write_report(status, tests: tests)
     end
 
     def status
@@ -49,7 +53,11 @@ module MiniTest
           ExtractStandardExceptionErrorMessage.(e)
         end
 
-      WriteReport.(path, :error, message: message)
+      write_report(:error, message: message)
+    end
+
+    def report_written?
+      @report_written
     end
 
     private
@@ -58,6 +66,14 @@ module MiniTest
       @exercise = exercise
       @path = path
       @tests = []
+      @report_written = false
+    end
+
+    def write_report(status, tests: nil, message: nil)
+      return if report_written?
+
+      WriteReport.(path, status, tests: tests, message: message)
+      @report_written = true
     end
   end
 end
