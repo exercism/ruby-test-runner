@@ -1,3 +1,3 @@
 require 'minitest/autorun'
 
-,This is a comma
+,'This is meant to be a syntax error'
