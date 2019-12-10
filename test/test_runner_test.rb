@@ -60,7 +60,7 @@ Traceback (most recent call first):
       assert_equal "error", actual["status"]
       expected = <<EOS
 Line 3: syntax error, unexpected ',', expecting end-of-input
-,This is a comma
+,'This is meant to be a syntax...
 ^
 EOS
 
