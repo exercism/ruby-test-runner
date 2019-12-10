@@ -14,6 +14,8 @@ require_relative "minitest_ext/exercism_plugin"
 require_relative "minitest_ext/exercism_reporter"
 require_relative "minitest_ext/minitest"
 
+require_relative "ext/kernel"
+
 class TestRunner
   def self.run(*args)
     new(*args).run
