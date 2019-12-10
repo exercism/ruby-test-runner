@@ -20,7 +20,12 @@ class TestRunnerTest < Minitest::Test
       tests: [
         {name: :test_a_name_given, status: :pass},
         {name: :test_another_name_given, status: :pass},
-        {name: :test_no_name_given, status: :fail, message: %Q{We tried running `TwoFer.two_fer` but received an unexpected result.\nExpected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"}}
+        {
+          name: :test_no_name_given,
+          status: :fail,
+          message: %Q{We tried running `TwoFer.two_fer` but received an unexpected result.\nExpected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"},
+          output: "The name is fred.\nHere's another line.\n"
+        }
       ]
     })
   end
@@ -63,7 +68,6 @@ Line 3: syntax error, unexpected ',', expecting end-of-input
 ,'This is meant to be a syntax...
 ^
 EOS
-
       assert_equal expected.strip, actual['message']
 
       assert_test_run_exited_cleanly
