@@ -111,8 +111,13 @@ module MiniTest
                        result.failure.to_s
       end
 
+      # Output should be restricted to the first 500 chars
+      # and an message should be appended if longer.
       def output
-        output_stream.string
+        str = output_stream.string
+        return str if str.length <= 500
+
+        %Q{#{str[0,500]}\n\n...Output was truncated. Please limit to 500 chars...}
       end
     end
   end
