@@ -99,7 +99,7 @@ module MiniTest
       end
 
       def attach_output?
-        status == :fail && output_stream.length > 0
+        output_stream.length > 0
       end
 
       def attach_message?

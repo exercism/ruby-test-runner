@@ -18,8 +18,16 @@ class TestRunnerTest < Minitest::Test
       status: :fail,
       message: nil,
       tests: [
-        {name: :test_a_name_given, status: :pass},
-        {name: :test_another_name_given, status: :pass},
+        {
+          name: :test_a_name_given, 
+          status: :pass,
+          output: "The name is Alice.\nHere's another line.\n"
+        },
+        {
+          name: :test_another_name_given, 
+          status: :pass,
+          output: "The name is Bob.\nHere's another line.\n"
+        },
         {
           name: :test_no_name_given,
           status: :fail,
