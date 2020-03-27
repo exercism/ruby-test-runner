@@ -10,3 +10,5 @@ RUN mkdir /opt/test-runner
 COPY . /opt/test-runner
 WORKDIR /opt/test-runner
 RUN bundle install
+
+ENTRYPOINT [ "sh", "bin/run.sh" ]
