@@ -95,6 +95,7 @@ module MiniTest
       attr_reader :result, :output_stream
 
       def status
+        return :error if result.error?
         result.failures.size == 0 ? :pass : :fail
       end
 
@@ -103,7 +104,7 @@ module MiniTest
       end
 
       def attach_message?
-        status == :fail
+        status != :pass
       end
 
       def message
