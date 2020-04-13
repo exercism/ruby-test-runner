@@ -51,7 +51,7 @@ Traceback (most recent call first):
       status: :fail,
       message: nil,
       tests: [
-        {name: :test_no_name_given, status: :fail, message: message}
+        {name: :test_no_name_given, status: :error, message: message}
       ]
     })
   end
