@@ -6,9 +6,10 @@ RUN apk update && apk upgrade && \
 
 RUN gem install bundler -v "2.0.2"
 
-RUN mkdir /opt/test-runner
-COPY . /opt/test-runner
 WORKDIR /opt/test-runner
+
+COPY . .
+
 RUN bundle install
 
-ENTRYPOINT [ "sh", "bin/run.sh" ]
+ENTRYPOINT [ "sh", "/opt/test-runner/bin/run.sh" ]
