@@ -13,4 +13,5 @@ gem 'minitest', '~> 5.11.3'
 group :test do
   gem 'mocha'
   gem 'pry'
+  gem 'simplecov', '~> 0.17.0'
 end
