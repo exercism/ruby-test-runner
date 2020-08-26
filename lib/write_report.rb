@@ -22,4 +22,3 @@ class WriteReport
     }.to_json
   end
 end
-
