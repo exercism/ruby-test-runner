@@ -28,13 +28,13 @@ module MiniTest
       tests.all? { |t| t[:status] == :pass } ? :pass : :fail
     end
 
-    def exception_raised!(exc)
+    def exception_raised!(e)
       message =
-        case exc
+        case e
         when SyntaxError
-          ExtractSyntaxExceptionErrorMessage.(exc)
+          ExtractSyntaxExceptionErrorMessage.(e)
         else
-          ExtractStandardExceptionErrorMessage.(exc)
+          ExtractStandardExceptionErrorMessage.(e)
         end
 
       write_report(:error, message: message)

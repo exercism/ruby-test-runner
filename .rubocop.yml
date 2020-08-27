@@ -43,6 +43,9 @@ Metrics/MethodLength:
   Exclude:
     - "test/**/*"
 
+Naming/MethodParameterName:
+  Enabled: false
+
 Naming/PredicateName:
   Enabled: false
 
