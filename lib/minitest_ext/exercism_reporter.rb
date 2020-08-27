@@ -10,14 +10,9 @@ module MiniTest
       @instance = new(*args)
     end
 
-    def initialize
-      @report_written = false
-    end
+    def start; end
 
-    def start
-    end
-
-    def prerecord(*args)
+    def prerecord(*)
       reset_user_output
     end
 
@@ -30,7 +25,7 @@ module MiniTest
     end
 
     def status
-      tests.all?{|t|t[:status] == :pass} ? :pass : :fail
+      tests.all? { |t| t[:status] == :pass } ? :pass : :fail
     end
 
     def exception_raised!(e)
@@ -90,12 +85,12 @@ module MiniTest
         end
       end
 
-
       private
       attr_reader :result, :output_stream
 
       def status
         return :error if result.error?
+
         result.failures.size == 0 ? :pass : :fail
       end
 
@@ -108,8 +103,11 @@ module MiniTest
       end
 
       def message
-        result.error?? ExtractFailureErrorMessage.(result.failure) :
-                       result.failure.to_s
+        if result.error?
+          ExtractFailureErrorMessage.(result.failure)
+        else
+          result.failure.to_s
+        end
       end
 
       # Output should be restricted to the first 500 chars
@@ -118,7 +116,7 @@ module MiniTest
         str = output_stream.string
         return str if str.length <= 500
 
-        %Q{#{str[0,500]}\n\n...Output was truncated. Please limit to 500 chars...}
+        %(#{str[0, 500]}\n\n...Output was truncated. Please limit to 500 chars...)
       end
     end
   end

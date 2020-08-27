@@ -4,7 +4,7 @@ module TwoFer
   end
 
   def self.work_out_name(name)
-    #raise "FoobaR"
+    # raise "FoobaR"
     name.non_existant_method
   end
 end

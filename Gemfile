@@ -10,6 +10,10 @@ gem 'rake'
 gem 'json'
 gem 'minitest', '~> 5.11.3'
 
+gem 'rubocop'
+gem 'rubocop-minitest'
+gem 'rubocop-performance'
+
 group :test do
   gem 'mocha'
   gem 'pry'

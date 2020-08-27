@@ -1,8 +1,7 @@
 module Minitest
-  def self.plugin_bogus_options(opts, options)
-  end
+  def self.plugin_bogus_options(opts, options); end
 
-  def self.plugin_exercism_init(*args)
+  def self.plugin_exercism_init(*)
     self.reporter.reporters.grep(Minitest::Reporter).each do |rep|
       rep.io = File.open(File::NULL, "w")
     end
@@ -14,13 +13,10 @@ module Minitest
       super
     end
 
-    def after_setup
-    end
+    def after_setup; end
 
-    def before_teardown
-    end
+    def before_teardown; end
 
-    def after_teardown
-    end
+    def after_teardown; end
   end
 end

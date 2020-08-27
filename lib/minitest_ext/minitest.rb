@@ -12,7 +12,7 @@ module Minitest
 
     class << self
       # Nobody sucks, OK?
-      alias_method :use_order_dependent_tests!, :i_suck_and_my_tests_are_order_dependent!
+      alias use_order_dependent_tests! i_suck_and_my_tests_are_order_dependent!
     end
   end
 end
