@@ -12,7 +12,7 @@ module MiniTest
 
     def start; end
 
-    def prerecord(*_args)
+    def prerecord(*)
       reset_user_output
     end
 
