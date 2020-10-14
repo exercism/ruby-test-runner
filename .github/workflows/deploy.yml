@@ -49,7 +49,6 @@ jobs:
       ###################
       ###################
       - name: Build and Push Docker image
-        id: build_rails
         env:
           ECR_REGISTRY: ${{ steps.login_to_ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ env.ecr_repository }}
