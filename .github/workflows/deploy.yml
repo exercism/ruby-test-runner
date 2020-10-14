@@ -52,9 +52,9 @@ jobs:
         id: build_rails
         env:
           ECR_REGISTRY: ${{ steps.login_to_ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ecr_repository_rails }}
+          ECR_REPOSITORY: ${{ env.ecr_repository }}
           IMAGE_TAG: "${{ github.sha }}"
-          DOCKERFILE: ${{ env.dockerfile_rails }}
+          DOCKERFILE: ${{ env.dockerfile }}
         run: |
           # Build a docker container and push it to ECR
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f $DOCKERFILE .
