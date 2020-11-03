@@ -16,16 +16,22 @@ module MiniTest
       reset_user_output
     end
 
+    def metadata=(metadata)
+      @metadata = metadata.each_with_object({}) do |md, hash| 
+        hash[md[:test]] = md
+      end
+    end
+
     def record(result)
-      tests << TestResult.new(result, user_output).to_h
+      tests << TestResult.new(result, user_output, metadata[result.name])
     end
 
     def report
-      write_report(status, tests: tests)
+      write_report(status, tests: tests.map(&:to_h))
     end
 
     def status
-      tests.all? { |t| t[:status] == :pass } ? :pass : :fail
+      tests.all? { |t| t.status == :pass } ? :pass : :fail
     end
 
     def exception_raised!(e)
@@ -49,7 +55,8 @@ module MiniTest
     end
 
     private
-    attr_reader :exercise, :path, :results, :tests, :user_output
+    attr_reader :exercise, :path, :results, :tests, :user_output, :metadata
+
     def initialize(exercise, path)
       @exercise = exercise
       @path = path
@@ -62,7 +69,7 @@ module MiniTest
     def write_report(status, tests: nil, message: nil)
       return if report_written?
 
-      WriteReport.(path, status, tests: tests, message: message)
+      TestRunner::WriteReport.(path, status, tests: tests, message: message)
       @report_written = true
     end
 
@@ -71,28 +78,31 @@ module MiniTest
     end
 
     class TestResult
-      def initialize(result, output_stream)
+      def initialize(result, output_stream, metadata)
         @result = result
         @output_stream = output_stream
+        @metadata = metadata
       end
 
       def to_h
         {}.tap do |hash|
-          hash[:name]    = result.name
-          hash[:status]  = status
-          hash[:output]  = output  if attach_output?
-          hash[:message] = message if attach_message?
+          hash[:name]     = metadata[:name]
+          hash[:cmd]      = metadata[:cmd]
+          hash[:expected] = metadata[:expected]
+          hash[:status]   = status
+          hash[:output]   = output  if attach_output?
+          hash[:message]  = message if attach_message?
         end
       end
-
-      private
-      attr_reader :result, :output_stream
 
       def status
         return :error if result.error?
 
         result.failures.size == 0 ? :pass : :fail
       end
+
+      private
+      attr_reader :result, :output_stream, :metadata
 
       def attach_output?
         output_stream.length > 0

@@ -2,40 +2,63 @@ require "test_helper"
 
 class TestRunnerTest < Minitest::Test
   def test_pass
-    assert_fixture(:pass, {
-                     status: :pass,
-                     message: nil,
-                     tests: [
-                       { name: :test_a_name_given, status: :pass },
-                       { name: :test_another_name_given, status: :pass },
-                       { name: :test_no_name_given, status: :pass }
-                     ]
-                   })
+    assert_fixture(
+      :pass,
+      {
+        status: :pass,
+        message: nil,
+        tests: [
+          {
+            name: :a_name_given, status: :pass,
+            cmd: 'TwoFer.two_fer("Alice")',
+            expected: '"One for Alice, one for me."'
+          },
+          {
+            name: :another_name_given, status: :pass,
+            cmd: 'TwoFer.two_fer("Bob")',
+            expected: '"One for Bob, one for me."'
+          },
+          {
+            name: :no_name_given, status: :pass,
+            cmd: "# skip\nTwoFer.two_fer",
+            expected: '"One for you, one for me."'
+          }
+        ]
+      }
+    )
   end
 
   def test_fail
-    assert_fixture(:fail, {
-                     status: :fail,
-                     message: nil,
-                     tests: [
-                       {
-                         name: :test_a_name_given,
-                         status: :pass,
-                         output: "The name is Alice.\nHere's another line.\n"
-                       },
-                       {
-                         name: :test_another_name_given,
-                         status: :pass,
-                         output: "The name is Bob.\nHere's another line.\n"
-                       },
-                       {
-                         name: :test_no_name_given,
-                         status: :fail,
-                         message: %(We tried running `TwoFer.two_fer` but received an unexpected result.\nExpected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
-                         output: "The name is fred.\nHere's another line.\n"
-                       }
-                     ]
-                   })
+    assert_fixture(
+      :fail, {
+        status: :fail,
+        message: nil,
+        tests: [
+          {
+            name: :a_name_given,
+            cmd: 'TwoFer.two_fer("Alice")',
+            expected: '"One for Alice, one for me."',
+            status: :pass,
+            output: "The name is Alice.\nHere's another line.\n"
+          },
+          {
+            name: :another_name_given,
+            cmd: 'TwoFer.two_fer("Bob")',
+            expected: '"One for Bob, one for me."',
+            status: :pass,
+            output: "The name is Bob.\nHere's another line.\n"
+          },
+          {
+            name: :no_name_given,
+            cmd: "# skip\nTwoFer.two_fer",
+            expected: '"One for you, one for me."',
+            status: :fail,
+            message: %(We tried running `TwoFer.two_fer` but received an unexpected result.\nExpected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
+            output: "The name is fred.\nHere's another line.\n"
+          }
+        ]
+      }
+    )
   end
 
   def test_deep_exception
@@ -51,7 +74,13 @@ Traceback (most recent call first):
                      status: :fail,
                      message: nil,
                      tests: [
-                       { name: :test_no_name_given, status: :error, message: message }
+                       {
+                         name: :no_name_given,
+                         status: :error,
+                         cmd: 'TwoFer.two_fer',
+                         expected: '"One for you, one for me."',
+                         message: message
+                       }
                      ]
                    })
   end
