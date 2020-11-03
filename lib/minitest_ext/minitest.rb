@@ -8,8 +8,6 @@ module Minitest
   end
 
   class Test
-    include ExercismPlugin
-
     class << self
       # Nobody sucks, OK?
       alias use_order_dependent_tests! i_suck_and_my_tests_are_order_dependent!

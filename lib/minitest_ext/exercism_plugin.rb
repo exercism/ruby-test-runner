@@ -7,16 +7,4 @@ module Minitest
     end
     self.reporter << ExercismReporter.instance
   end
-
-  module ExercismPlugin
-    def before_setup
-      super
-    end
-
-    def after_setup; end
-
-    def before_teardown; end
-
-    def after_teardown; end
-  end
 end
