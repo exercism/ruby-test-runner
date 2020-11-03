@@ -18,11 +18,15 @@ class Minitest::Test
 end
 
 class Minitest::Test
-  def assert_fixture(fixture, expected)
+  def run_fixture(fixture)
     with_tmp_dir_for_fixture(fixture) do |_input_dir, output_dir|
-      actual = JSON.parse(File.read(output_dir / "results.json"))
-      assert_equal JSON.parse(expected.to_json), actual
+      JSON.parse(File.read(output_dir / "results.json"))
     end
+  end
+
+  def assert_fixture(fixture, expected)
+    actual = run_fixture(fixture)
+    assert_equal JSON.parse(expected.to_json), actual
     assert_test_run_exited_cleanly
   end
 
