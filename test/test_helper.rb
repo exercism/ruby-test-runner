@@ -7,7 +7,8 @@ end
 gem 'minitest'
 
 require "minitest/autorun"
-require "mocha/setup"
+require "minitest/pride"
+require "mocha/minitest"
 
 require 'securerandom'
 require 'json'
