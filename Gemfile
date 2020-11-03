@@ -10,12 +10,14 @@ gem 'rake'
 gem 'json'
 gem 'minitest', '~> 5.11.3'
 
-gem 'rubocop'
-gem 'rubocop-minitest'
-gem 'rubocop-performance'
+gem 'parser'
+gem 'rubocop-ast'
 
 group :test do
   gem 'mocha'
   gem 'pry'
   gem 'simplecov', '~> 0.17.0'
+  gem 'rubocop'
+  gem 'rubocop-minitest'
+  gem 'rubocop-performance'
 end
