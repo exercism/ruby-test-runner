@@ -34,6 +34,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.aws_region }}
 
+      - name: Assume AWS Role
+        env:
+          ECR_REPOSITORY: ${{ env.ecr_repository }}
+        run: |
+          ARN=$(aws iam list-roles --query "Roles[?RoleName == 'tooling-ecr-pusher-${ECR_REPOSITORY}'].[Arn]" | jq '.[0][0]')
+          aws sts assume-role --role-arn ${ARN} --role-session-name GHA-${ECR_REPOSITORY}-Deploy
+
       - name: Login to Amazon ECR
         id: login_to_ecr
         uses: aws-actions/amazon-ecr-login@v1
