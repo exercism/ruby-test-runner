@@ -13,7 +13,7 @@ RUN wget -P /usr/local/bin https://github.com/exercism/tooling-webserver/release
 
 WORKDIR /opt/test-runner
 
-COPY Gemfile Gemfile.lock
+COPY Gemfile Gemfile.lock .
 RUN bundle install
 
 COPY . .
