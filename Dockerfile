@@ -11,7 +11,6 @@ WORKDIR /opt/test-runner
 
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler:2.1.4 && \
-    bundle config set deployment 'true' && \
     bundle config set without 'development test' && \
     bundle install
 

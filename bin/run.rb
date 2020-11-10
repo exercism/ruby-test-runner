@@ -3,6 +3,8 @@
 # only override the exit status if we have a
 # report.json with some sensible things in.
 at_exit do
+  require 'minitest'
+
   return unless MiniTest::ExercismReporter.instance
   return unless MiniTest::ExercismReporter.instance.report_written?
 
