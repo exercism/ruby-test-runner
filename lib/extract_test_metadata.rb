@@ -42,7 +42,10 @@ class TestRunner
     # TODO: Make this a bit prettier.
     memoize
     def test_name
-      test_node.method_name.to_s.gsub("test_", "")
+      test_node.method_name.to_s.
+        gsub("test_", "").
+        gsub("_", " ").
+        capitalize
     end
 
     # This builds up the command part. Simply put the algorithm is:

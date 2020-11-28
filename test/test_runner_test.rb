@@ -9,17 +9,17 @@ class TestRunnerTest < Minitest::Test
         message: nil,
         tests: [
           {
-            name: :a_name_given, 
+            name: "A name given", 
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass,
           },
           {
-            name: :another_name_given, 
+            name: "Another name given", 
             status: :pass,
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
           },
           {
-            name: :no_name_given, 
+            name: "No name given", 
             status: :pass,
             test_code: %Q{assert_equal "One for you, one for me.", TwoFer.two_fer}
           }
@@ -35,19 +35,19 @@ class TestRunnerTest < Minitest::Test
         message: nil,
         tests: [
           {
-            name: :a_name_given, 
+            name: "A name given", 
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass,
             output: "The name is Alice.\nHere's another line.\n"
           },
           {
-            name: :another_name_given, 
+            name: "Another name given", 
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
             status: :pass,
             output: "The name is Bob.\nHere's another line.\n"
           },
           {
-            name: :no_name_given,
+            name: "No name given",
             test_code: %Q{assert_equal "One for you, one for me.", TwoFer.two_fer},
             status: :fail,
             message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
@@ -72,7 +72,7 @@ Traceback (most recent call first):
                      message: nil,
                      tests: [
                        {
-                         name: :no_name_given,
+                         name: "No name given",
                          test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
                          status: :error,
                          message: message
