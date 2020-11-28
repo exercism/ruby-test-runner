@@ -5,6 +5,8 @@ gem 'minitest'
 require "minitest/autorun"
 
 require_relative "write_report"
+require_relative "extract_metadata"
+require_relative "extract_test_metadata"
 
 require_relative "minitest_ext/extract_standard_exception_error_message"
 require_relative "minitest_ext/extract_syntax_exception_error_message"
@@ -33,6 +35,8 @@ class TestRunner
     Minitest::Test.use_order_dependent_tests!
 
     Dir.glob(input_path + "/*_test.rb").sort.each do |test_file|
+      reporter.metadata = ExtractMetadata.(test_file)
+
       begin
         require test_file
       rescue StandardError, SyntaxError => e

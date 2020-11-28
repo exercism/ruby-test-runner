@@ -2,40 +2,60 @@ require "test_helper"
 
 class TestRunnerTest < Minitest::Test
   def test_pass
-    assert_fixture(:pass, {
-                     status: :pass,
-                     message: nil,
-                     tests: [
-                       { name: :test_a_name_given, status: :pass },
-                       { name: :test_another_name_given, status: :pass },
-                       { name: :test_no_name_given, status: :pass }
-                     ]
-                   })
+    assert_fixture(
+      :pass,
+      {
+        status: :pass,
+        message: nil,
+        tests: [
+          {
+            name: :a_name_given, 
+            test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
+            status: :pass,
+          },
+          {
+            name: :another_name_given, 
+            status: :pass,
+            test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
+          },
+          {
+            name: :no_name_given, 
+            status: :pass,
+            test_code: %Q{assert_equal "One for you, one for me.", TwoFer.two_fer}
+          }
+        ]
+      }
+    )
   end
 
   def test_fail
-    assert_fixture(:fail, {
-                     status: :fail,
-                     message: nil,
-                     tests: [
-                       {
-                         name: :test_a_name_given,
-                         status: :pass,
-                         output: "The name is Alice.\nHere's another line.\n"
-                       },
-                       {
-                         name: :test_another_name_given,
-                         status: :pass,
-                         output: "The name is Bob.\nHere's another line.\n"
-                       },
-                       {
-                         name: :test_no_name_given,
-                         status: :fail,
-                         message: %(We tried running `TwoFer.two_fer` but received an unexpected result.\nExpected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
-                         output: "The name is fred.\nHere's another line.\n"
-                       }
-                     ]
-                   })
+    assert_fixture(
+      :fail, {
+        status: :fail,
+        message: nil,
+        tests: [
+          {
+            name: :a_name_given, 
+            test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
+            status: :pass,
+            output: "The name is Alice.\nHere's another line.\n"
+          },
+          {
+            name: :another_name_given, 
+            test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
+            status: :pass,
+            output: "The name is Bob.\nHere's another line.\n"
+          },
+          {
+            name: :no_name_given,
+            test_code: %Q{assert_equal "One for you, one for me.", TwoFer.two_fer},
+            status: :fail,
+            message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
+            output: "The name is fred.\nHere's another line.\n"
+          }
+        ]
+      }
+    )
   end
 
   def test_deep_exception
@@ -51,7 +71,12 @@ Traceback (most recent call first):
                      status: :fail,
                      message: nil,
                      tests: [
-                       { name: :test_no_name_given, status: :error, message: message }
+                       {
+                         name: :no_name_given,
+                         test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
+                         status: :error,
+                         message: message
+                       }
                      ]
                    })
   end
@@ -100,6 +125,7 @@ Traceback (most recent call first):
   end
 
   def test_really_bad_things_exit_uncleanly
+    skip
     # I have no idea how to make this work, but
     # it seems like a important test to have
     # WriteReport.stubs(:new).raises("Something really bad!")
