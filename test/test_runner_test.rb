@@ -5,23 +5,24 @@ class TestRunnerTest < Minitest::Test
     assert_fixture(
       :pass,
       {
+        version: 2,
         status: :pass,
         message: nil,
         tests: [
           {
-            name: :a_name_given, 
+            name: :a_name_given,
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
-            status: :pass,
+            status: :pass
           },
           {
-            name: :another_name_given, 
+            name: :another_name_given,
             status: :pass,
-            test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
+            test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")'
           },
           {
-            name: :no_name_given, 
+            name: :no_name_given,
             status: :pass,
-            test_code: %Q{assert_equal "One for you, one for me.", TwoFer.two_fer}
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer)
           }
         ]
       }
@@ -31,24 +32,25 @@ class TestRunnerTest < Minitest::Test
   def test_fail
     assert_fixture(
       :fail, {
+        version: 2,
         status: :fail,
         message: nil,
         tests: [
           {
-            name: :a_name_given, 
+            name: :a_name_given,
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass,
             output: "The name is Alice.\nHere's another line.\n"
           },
           {
-            name: :another_name_given, 
+            name: :another_name_given,
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
             status: :pass,
             output: "The name is Bob.\nHere's another line.\n"
           },
           {
             name: :no_name_given,
-            test_code: %Q{assert_equal "One for you, one for me.", TwoFer.two_fer},
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
             status: :fail,
             message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
             output: "The name is fred.\nHere's another line.\n"
@@ -67,18 +69,22 @@ Traceback (most recent call first):
     Line 3:in `two_fer'
 ".strip
 
-    assert_fixture(:deep_exception, {
-                     status: :fail,
-                     message: nil,
-                     tests: [
-                       {
-                         name: :no_name_given,
-                         test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
-                         status: :error,
-                         message: message
-                       }
-                     ]
-                   })
+    assert_fixture(
+      :deep_exception,
+      {
+        version: 2,
+        status: :fail,
+        message: nil,
+        tests: [
+          {
+            name: :no_name_given,
+            test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
+            status: :error,
+            message: message
+          }
+        ]
+      }
+    )
   end
 
   def test_name_error_exception

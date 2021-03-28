@@ -17,6 +17,7 @@ class TestRunner
     attr_reader :path, :status, :message, :tests
     def json
       {
+        version: 2,
         status: status,
         message: message,
         tests: tests

@@ -4,6 +4,7 @@ class AttacksTest < Minitest::Test
   def test_large_output_is_truncated
     assert_fixture(
       :attack_large_output, {
+        version: 2,
         status: :fail,
         message: nil,
         tests: [
