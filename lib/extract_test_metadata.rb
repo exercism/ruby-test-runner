@@ -57,6 +57,7 @@ class TestRunner
       # part of assertionions
       test_code = body_line_numbers.map do |idx|
         next if ignore_line_numbers.include?(idx)
+
         c = code_for_line(idx)
 
         # Only return if it's not a skip comment
@@ -70,7 +71,7 @@ class TestRunner
     # Remove the minimum amount of leading whitespace
     # from all lines
     def clean_leading_whitespace(multiline)
-      min = multiline.lines.map {|line| line[/^\s*/].size}.min
+      min = multiline.lines.map { |line| line[/^\s*/].size }.min
       multiline.gsub(/^\s{#{min}}/, '')
     end
 

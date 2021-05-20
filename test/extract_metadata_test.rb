@@ -6,9 +6,9 @@ class ExtractMetadataTest < Minitest::Test
     expected = [{
       test: "test_assert_equal_works_properly",
       name: "assert_equal_works_properly",
-      test_code: %Q{some_result = TwoFer.two_fer\nassert_equal "One for you, one for me.", some_result},
+      test_code: %(some_result = TwoFer.two_fer\nassert_equal "One for you, one for me.", some_result)
     }]
-    
+
     actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/assert_equal.rb", __dir__))
     assert_equal expected, actual
   end
@@ -19,7 +19,7 @@ class ExtractMetadataTest < Minitest::Test
       name: "skip_works_properly",
       test_code: "something = \"Something\"\nassert something.present?"
     }]
-    
+
     actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/skip.rb", __dir__))
     assert_equal expected, actual
   end
@@ -30,9 +30,8 @@ class ExtractMetadataTest < Minitest::Test
       name: "skip_works_properly",
       test_code: "something = \"Something\"\nassert something.present?"
     }]
-    
+
     actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/skip_comment.rb", __dir__))
     assert_equal expected, actual
   end
-
 end

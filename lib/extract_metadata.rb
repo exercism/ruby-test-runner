@@ -1,7 +1,7 @@
 require 'rubocop/ast'
 require 'parser/current'
 
-# This class takes a test file, gets its AST, and 
+# This class takes a test file, gets its AST, and
 # looks for tests (def test_...). Each of these then
 # gets passed into the ExtractTestMetadata.() command
 # to get its metadata.
@@ -31,7 +31,7 @@ class TestRunner
     def on_def(node)
       return unless node.method_name.to_s.start_with?("test_")
 
-      tests << ExtractTestMetadata.(filelines, node) 
+      tests << ExtractTestMetadata.(filelines, node)
     end
 
     private

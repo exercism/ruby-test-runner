@@ -17,7 +17,7 @@ module MiniTest
     end
 
     def metadata=(metadata)
-      @metadata = metadata.each_with_object({}) do |md, hash| 
+      @metadata = metadata.each_with_object({}) do |md, hash|
         hash[md[:test]] = md
       end
     end
@@ -58,6 +58,8 @@ module MiniTest
     attr_reader :exercise, :path, :results, :tests, :user_output, :metadata
 
     def initialize(exercise, path)
+      super()
+
       @exercise = exercise
       @path = path
       @tests = []

@@ -24,6 +24,7 @@ class TestRunner
   end
 
   attr_reader :exercise, :input_path
+
   def initialize(exercise, input_path, output_path)
     @exercise = exercise
     @input_path = input_path
@@ -34,7 +35,7 @@ class TestRunner
     Minitest.extensions << "exercism"
     Minitest::Test.use_order_dependent_tests!
 
-    Dir.glob(input_path + "/*_test.rb").sort.each do |test_file|
+    Dir.glob("#{input_path}/*_test.rb").sort.each do |test_file|
       reporter.metadata = ExtractMetadata.(test_file)
 
       begin
