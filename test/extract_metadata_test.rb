@@ -5,7 +5,7 @@ class ExtractMetadataTest < Minitest::Test
   def test_assert_equal
     expected = [{
       test: "test_assert_equal_works_properly",
-      name: "assert_equal_works_properly",
+      name: "Assert equal works properly",
       test_code: %(some_result = TwoFer.two_fer\nassert_equal "One for you, one for me.", some_result)
     }]
 
@@ -16,7 +16,7 @@ class ExtractMetadataTest < Minitest::Test
   def test_no_skips
     expected = [{
       test: "test_skip_works_properly",
-      name: "skip_works_properly",
+      name: "Skip works properly",
       test_code: "something = \"Something\"\nassert something.present?"
     }]
 
@@ -27,7 +27,7 @@ class ExtractMetadataTest < Minitest::Test
   def test_no_skip_comments
     expected = [{
       test: "test_skip_works_properly",
-      name: "skip_works_properly",
+      name: "Skip works properly",
       test_code: "something = \"Something\"\nassert something.present?"
     }]
 
