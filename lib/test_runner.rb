@@ -3,6 +3,7 @@ require 'json'
 
 gem 'minitest'
 require "minitest/autorun"
+require "minitest/pride_plugin"
 
 require_relative "write_report"
 require_relative "extract_metadata"
@@ -33,7 +34,9 @@ class TestRunner
 
   def run
     Minitest.extensions << "exercism"
+    Minitest.extensions << "pride"
     Minitest::Test.use_order_dependent_tests!
+    Minitest::PrideIO.pride!
 
     Dir.glob("#{input_path}/*_test.rb").sort.each do |test_file|
       reporter.metadata = ExtractMetadata.(test_file)

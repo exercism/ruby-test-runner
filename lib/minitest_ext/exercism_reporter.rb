@@ -23,6 +23,7 @@ module MiniTest
     end
 
     def record(result)
+      p result
       tests << TestResult.new(result, user_output, metadata[result.name])
     end
 

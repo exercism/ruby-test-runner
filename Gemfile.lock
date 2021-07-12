@@ -8,6 +8,8 @@ GEM
     mandate (0.3.0)
     method_source (1.0.0)
     minitest (5.11.3)
+    minitest-rg (5.2.0)
+      minitest (~> 5.0)
     mocha (1.11.2)
     parallel (1.19.2)
     parser (2.7.1.4)
@@ -49,6 +51,7 @@ DEPENDENCIES
   json
   mandate
   minitest (~> 5.11.3)
+  minitest-rg
   mocha
   parser
   pry
