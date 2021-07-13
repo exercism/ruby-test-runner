@@ -23,7 +23,7 @@ class TestRunnerTest < Minitest::Test
             name: "Another name given",
             status: :pass,
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")'
-          },
+          }
         ]
       }
     )
