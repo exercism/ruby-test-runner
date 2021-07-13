@@ -28,7 +28,7 @@ module MiniTest
     end
 
     def report
-      write_report(status, tests: tests.map(&:to_h))
+      write_report(status, tests: tests.sort_by(&:index).map(&:to_h))
     end
 
     def status
@@ -101,6 +101,10 @@ module MiniTest
         return :error if result.error?
 
         result.failures.size == 0 ? :pass : :fail
+      end
+
+      def index
+        metadata[:index]
       end
 
       private

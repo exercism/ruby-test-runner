@@ -10,6 +10,11 @@ class TestRunnerTest < Minitest::Test
         message: nil,
         tests: [
           {
+            name: "No name given",
+            status: :pass,
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer)
+          },
+          {
             name: 'A name given',
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass
@@ -19,11 +24,6 @@ class TestRunnerTest < Minitest::Test
             status: :pass,
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")'
           },
-          {
-            name: "No name given",
-            status: :pass,
-            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer)
-          }
         ]
       }
     )
@@ -37,6 +37,13 @@ class TestRunnerTest < Minitest::Test
         message: nil,
         tests: [
           {
+            name: "No name given",
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
+            status: :fail,
+            message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
+            output: "The name is fred.\nHere's another line.\n"
+          },
+          {
             name: "A name given",
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass,
@@ -47,13 +54,6 @@ class TestRunnerTest < Minitest::Test
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
             status: :pass,
             output: "The name is Bob.\nHere's another line.\n"
-          },
-          {
-            name: "No name given",
-            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
-            status: :fail,
-            message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
-            output: "The name is fred.\nHere's another line.\n"
           }
         ]
       }
