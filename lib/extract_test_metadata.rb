@@ -2,7 +2,7 @@ class TestRunner
   class ExtractTestMetadata < Parser::AST::Processor
     include Mandate
 
-    initialize_with :filelines, :test_node
+    initialize_with :filelines, :test_node, :index
 
     def call
       @ignore_line_numbers = []
@@ -18,7 +18,8 @@ class TestRunner
       {
         test: test_identifier,
         name: test_name,
-        test_code: test_code
+        test_code: test_code,
+        index: index
       }
     end
 
@@ -55,7 +56,7 @@ class TestRunner
       body_line_numbers = ((test_node.first_line + 1)..(test_node.last_line - 1))
 
       # Map through those lines, skipping any that were
-      # part of assertionions
+      # part of assertions
       test_code = body_line_numbers.map do |idx|
         next if ignore_line_numbers.include?(idx)
 
@@ -77,7 +78,7 @@ class TestRunner
     end
 
     # The parser returns 1-indexed line numbers. This
-    # function retreives them based on their 0-based equiv.
+    # function retrieves them based on their 0-based equiv.
     def code_for_line(one_indexed_idx)
       filelines[one_indexed_idx - 1]
     end

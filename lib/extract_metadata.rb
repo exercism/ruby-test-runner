@@ -13,6 +13,7 @@ class TestRunner
 
     def call
       @filelines = File.readlines(filepath)
+      @num_tests = 0
       buffer = Parser::Source::Buffer.new('', source: filelines.join)
       builder = RuboCop::AST::Builder.new
       ast = Parser::CurrentRuby.new(builder).parse(buffer)
@@ -24,14 +25,15 @@ class TestRunner
       # works via the parser gem.
       process(ast)
 
-      # We've extacted all the tests, so now return them.
+      # We've extracted all the tests, so now return them.
       tests
     end
 
     def on_def(node)
       return unless node.method_name.to_s.start_with?("test_")
 
-      tests << ExtractTestMetadata.(filelines, node)
+      tests << ExtractTestMetadata.(filelines, node, @num_tests)
+      @num_tests += 1
     end
 
     private
