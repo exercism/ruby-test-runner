@@ -13,7 +13,7 @@ class TestRunner
 
     def call
       @filelines = File.readlines(filepath)
-      @test_count = 0
+      @num_tests = 0
       buffer = Parser::Source::Buffer.new('', source: filelines.join)
       builder = RuboCop::AST::Builder.new
       ast = Parser::CurrentRuby.new(builder).parse(buffer)
@@ -32,8 +32,8 @@ class TestRunner
     def on_def(node)
       return unless node.method_name.to_s.start_with?("test_")
 
-      tests << ExtractTestMetadata.(filelines, node, @test_count)
-      @test_count += 1
+      tests << ExtractTestMetadata.(filelines, node, @num_tests)
+      @num_tests += 1
     end
 
     private
