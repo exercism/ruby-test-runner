@@ -29,7 +29,7 @@ class TestRunner
   def initialize(exercise, input_path, output_path)
     @exercise = exercise
     @input_path = input_path
-    @reporter = MiniTest::ExercismReporter.init(exercise, output_path)
+    @reporter = Minitest::ExercismReporter.init(exercise, output_path)
   end
 
   def run
