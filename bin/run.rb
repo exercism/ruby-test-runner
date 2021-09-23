@@ -5,8 +5,8 @@
 at_exit do
   require 'minitest'
 
-  return unless MiniTest::ExercismReporter.instance
-  return unless MiniTest::ExercismReporter.instance.report_written?
+  return unless Minitest::ExercismReporter.instance
+  return unless Minitest::ExercismReporter.instance.report_written?
 
   exit 0
 end

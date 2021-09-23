@@ -1,4 +1,4 @@
-module MiniTest
+module Minitest
   class ExercismReporter < AbstractReporter
     class << self
       attr_reader :instance
