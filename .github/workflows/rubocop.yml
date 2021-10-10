@@ -1,0 +1,29 @@
+name: Rubocop
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@e27aee156d42e38ff8a4c2fc97b125c4087cbcc7
+        with:
+          ruby-version: 2.6.6
+          bundler-cache: true
+
+      - name: Install gems
+        run: |
+          gem install rubocop
+          gem install rubocop-minitest
+          gem install rubocop-performance
+
+      - name: Run Rubocop
+        run: rubocop --except Metrics
