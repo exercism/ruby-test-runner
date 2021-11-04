@@ -5,9 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'mandate'
+gem 'mandate', '~> 1.0.0.beta1'
 gem 'rake'
-gem 'json'
+gem 'json', '~> 2.6.1'
 gem 'minitest', '~> 5.11.3'
 
 gem 'parser'

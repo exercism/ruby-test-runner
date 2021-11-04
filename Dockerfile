@@ -1,4 +1,4 @@
-FROM ruby:2.5-alpine
+FROM ruby:3.0.2-alpine
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh && \
@@ -10,7 +10,7 @@ RUN wget -P /usr/local/bin https://github.com/exercism/tooling-webserver/release
 WORKDIR /opt/test-runner
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler:2.1.4 && \
+RUN gem install bundler:2.2.29 && \
     bundle config set without 'development test' && \
     bundle install
 
