@@ -22,7 +22,7 @@ bundle install
 ```
 
 Then, in [test/test_helper.rb](test/test_helper.rb),
-comment the "Main command" `system(…)` out
+comment the "Production command" `system(…)` out
 and uncomment either of the "Testing commands".
 
 Lastly, run the following command to run the tests:

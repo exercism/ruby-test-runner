@@ -61,7 +61,7 @@ class Minitest::Test
     # exec("bin/run.sh two_fer #{input_dir} #{output_dir}")
     # system("bin/run.sh two_fer #{input_dir} #{output_dir}")
 
-    # Main command
+    # Production command
     system("bin/run.sh two_fer #{input_dir} #{output_dir}", out: "/dev/null", err: "/dev/null")
   end
 end
