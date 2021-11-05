@@ -108,7 +108,7 @@ Traceback (most recent call first):
         ,'This is meant to be a syntax...
         ^
       SYNTAX_ERRORS
-      assert_equal expected.strip, actual['message']
+      assert_equal expected, actual['message']
 
       assert_test_run_exited_cleanly
     end
@@ -124,7 +124,7 @@ Traceback (most recent call first):
         end,A stray comma
            ^
       SYNTAX_ERRORS
-      assert_equal expected.strip, actual['message']
+      assert_equal expected, actual['message']
 
       assert_test_run_exited_cleanly
     end
