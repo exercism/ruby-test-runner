@@ -17,10 +17,15 @@ For example:
 Before running the tests, first install the dependencies:
 
 ```bash
+bundle config set --local with 'test'
 bundle install
 ```
 
-Then, run the following command to run the tests:
+Then, in [test/test_helper.rb](test/test_helper.rb),
+comment the "Main command" `system(…)` out
+and uncomment either of the "Testing commands".
+
+Lastly, run the following command to run the tests:
 
 ```bash
 bundle exec rake test
