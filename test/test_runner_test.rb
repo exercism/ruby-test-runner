@@ -29,6 +29,29 @@ class TestRunnerTest < Minitest::Test
     )
   end
 
+  def test_pass_ruby_3
+    assert_fixture(
+      :pass_ruby_3_syntax,
+      {
+        version: 2,
+        status: :pass,
+        message: nil,
+        tests: [
+          {
+            name: "Rightward assign",
+            status: :pass,
+            test_code: %(assert_equal Ruby3Syntax.rightward_assign, 'is fun')
+          },
+          {
+            name: "Endless method def",
+            status: :pass,
+            test_code: %(assert_equal Ruby3Syntax.endless_methods, 'are fun')
+          }
+        ]
+      }
+    )
+  end
+
   def test_fail
     assert_fixture(
       :fail, {
