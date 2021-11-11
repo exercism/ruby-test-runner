@@ -7,7 +7,7 @@ end
 
 ruby '3.0.2'
 
-gem 'mandate', '~> 1.0.0.beta1'
+gem "mandate", "~> 1.0.0"
 gem 'rake'
 gem 'json', '~> 2.6.1'
 gem 'minitest', '~> 5.11.3'
