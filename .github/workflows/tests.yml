@@ -16,7 +16,7 @@ jobs:
 
       # Setup Ruby - this needs to match the version in the Gemfile
       - name: Set up Ruby
-        uses: ruby/setup-ruby@03b78bdda287ae04217ee12e4b64996630a03542
+        uses: ruby/setup-ruby@93287a1fa82c6ddbb6d8db978df4b0119cd8879f
         with:
           ruby-version: 3.0.2
           bundler-cache: true
