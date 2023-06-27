@@ -93,6 +93,7 @@ module Minitest
           hash[:status]    = status
           hash[:output]    = output  if attach_output?
           hash[:message]   = message if attach_message?
+          hash[:task_id]   = metadata[:task_id]
         end
       end
 

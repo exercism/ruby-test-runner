@@ -18,7 +18,7 @@ class TestRunner
 
     def json
       {
-        version: 2,
+        version: 3,
         status: status,
         message: message,
         tests: tests
