@@ -75,9 +75,8 @@ class TestRunner
 
         c = code_for_line(idx)
         # Find a line started with `### task_id` and get the number
-        if c.start_with?(/\s*###\s*task_id/)
-          c.chomp.strip.delete('### task_id:').to_i
-        end
+        ch_task_id = /\s*###\s*task_id/
+        c.chomp.strip.delete('### task_id:').to_i if c.start_with?(ch_task_id)
       end.compact.first
     end
 
