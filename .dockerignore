@@ -1,4 +1,5 @@
-test/
+bin/
+tests/
 node_modules/
 .appends
 .git
@@ -7,3 +8,5 @@ node_modules/
 .gitattributes
 .dockerignore
 Dockerfile
+!bin/run.sh
+!bin/run.rb

@@ -8,7 +8,7 @@ AllCops:
     - "bin/**/*"
     - "Gemfile"
     - "Gemfile.lock"
-    - "test/fixtures/**/*"
+    - "tests/**/*"
     - "vendor/**/*"
 
 Bundler/OrderedGems:
