@@ -14,11 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
 
-      # Setup Ruby - this needs to match the version in the Gemfile
       - name: Set up Ruby
         uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939
         with:
-          ruby-version: 3.0.2
+          ruby-version: .ruby-version
           bundler-cache: true
 
       # Setup code climate
