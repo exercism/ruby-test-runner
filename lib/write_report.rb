@@ -22,7 +22,7 @@ class TestRunner
         status: status,
         message: message,
         tests: tests
-      }.to_json
+      }.to_json + "\n"
     end
   end
 end
