@@ -1,4 +1,5 @@
 bin/
+test/
 tests/
 node_modules/
 .appends
