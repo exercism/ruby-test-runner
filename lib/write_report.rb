@@ -10,7 +10,7 @@ class TestRunner
     end
 
     def call
-      File.write("#{path}/results.json", json)
+      File.write("#{path}/results.json", "#{json}\n")
     end
 
     private
@@ -22,7 +22,7 @@ class TestRunner
         status: status,
         message: message,
         tests: tests
-      }.to_json + "\n"
+      }.to_json
     end
   end
 end
