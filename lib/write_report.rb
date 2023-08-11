@@ -10,7 +10,7 @@ class TestRunner
     end
 
     def call
-      File.write("#{path}/results.json", json)
+      File.write("#{path}/results.json", "#{json}\n")
     end
 
     private

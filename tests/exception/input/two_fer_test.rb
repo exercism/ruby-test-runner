@@ -1,0 +1,3 @@
+require 'minitest/autorun'
+
+raise_an_error_because_i_am_a_random_method
