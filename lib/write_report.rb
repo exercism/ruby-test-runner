@@ -19,9 +19,9 @@ class TestRunner
     def json
       {
         version: 2,
-        status: status,
-        message: message,
-        tests: tests
+        status:,
+        message:,
+        tests:
       }.to_json
     end
   end
