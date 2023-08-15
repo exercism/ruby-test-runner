@@ -18,8 +18,8 @@ class TestRunner
       {
         test: test_identifier,
         name: test_name,
-        test_code: test_code,
-        index: index
+        test_code:,
+        index:
       }
     end
 

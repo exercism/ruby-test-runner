@@ -103,7 +103,7 @@ Traceback (most recent call first):
             name: "No name given",
             test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
             status: :error,
-            message: message
+            message:
           }
         ]
       }

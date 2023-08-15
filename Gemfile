@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '3.0.2'
+ruby '3.2.2'
 
 gem "mandate", "~> 1.0.0"
 gem 'rake'
