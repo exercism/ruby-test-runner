@@ -10,17 +10,18 @@ class TestRunner
     end
 
     def call
-      File.write("#{path}/results.json", json)
+      File.write("#{path}/results.json", "#{json}\n")
     end
 
     private
     attr_reader :path, :status, :message, :tests
+
     def json
       {
         version: 2,
-        status: status,
-        message: message,
-        tests: tests
+        status:,
+        message:,
+        tests:
       }.to_json
     end
   end

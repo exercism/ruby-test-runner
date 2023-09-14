@@ -8,7 +8,11 @@ AllCops:
     - "bin/**/*"
     - "Gemfile"
     - "Gemfile.lock"
-    - "test/fixtures/**/*"
+    - "test/fixtures**/*"
+    - "test/fixtures/syntax_error_in_code/input/two_fer.rb"
+    - "test/fixtures/syntax_error_in_tests/input/two_fer_test.rb"
+    - "tests/**/*"
+    - "vendor/**/*"
 
 Bundler/OrderedGems:
   Enabled: false
@@ -28,6 +32,18 @@ Layout/MultilineMethodCallIndentation:
 
 Layout/EmptyLinesAroundAccessModifier:
   EnforcedStyle: only_before
+
+Layout/TrailingEmptyLines:
+  Exclude:
+    - "test/**/*"
+
+Layout/CommentIndentation:
+  Exclude:
+    - "test/**/*"
+
+Layout/LeadingCommentSpace:
+  Exclude:
+    - "test/**/*"
 
 Lint/SuppressedException:
   Exclude:
@@ -80,3 +96,7 @@ Naming/VariableNumber:
 
 Style/LambdaCall:
   EnforcedStyle: braces
+
+Style/RedundantReturn:
+  Exclude:
+    - "test/**/*"

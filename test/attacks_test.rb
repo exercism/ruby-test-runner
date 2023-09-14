@@ -9,7 +9,7 @@ class AttacksTest < Minitest::Test
         message: nil,
         tests: [
           {
-            name: :no_name_given,
+            name: "No name given",
             test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
             status: :fail,
             output: %(#{Array.new(500) { 'a' }.join}\n\n...Output was truncated. Please limit to 500 chars...),

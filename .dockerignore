@@ -1,2 +1,13 @@
+bin/
 test/
+tests/
 node_modules/
+.appends
+.git
+.github
+.gitignore
+.gitattributes
+.dockerignore
+Dockerfile
+!bin/run.sh
+!bin/run.rb

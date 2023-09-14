@@ -10,19 +10,42 @@ class TestRunnerTest < Minitest::Test
         message: nil,
         tests: [
           {
-            name: :a_name_given,
+            name: "No name given",
+            status: :pass,
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer)
+          },
+          {
+            name: 'A name given',
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass
           },
           {
-            name: :another_name_given,
+            name: "Another name given",
             status: :pass,
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")'
+          }
+        ]
+      }
+    )
+  end
+
+  def test_pass_ruby_3
+    assert_fixture(
+      :pass_ruby_3_syntax,
+      {
+        version: 2,
+        status: :pass,
+        message: nil,
+        tests: [
+          {
+            name: "Rightward assign",
+            status: :pass,
+            test_code: %(assert_equal Ruby3Syntax.rightward_assign, 'is fun')
           },
           {
-            name: :no_name_given,
+            name: "Endless method def",
             status: :pass,
-            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer)
+            test_code: %(assert_equal Ruby3Syntax.endless_methods, 'are fun')
           }
         ]
       }
@@ -37,23 +60,23 @@ class TestRunnerTest < Minitest::Test
         message: nil,
         tests: [
           {
-            name: :a_name_given,
+            name: "No name given",
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
+            status: :fail,
+            message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
+            output: "The name is fred.\nHere's another line.\n"
+          },
+          {
+            name: "A name given",
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass,
             output: "The name is Alice.\nHere's another line.\n"
           },
           {
-            name: :another_name_given,
+            name: "Another name given",
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
             status: :pass,
             output: "The name is Bob.\nHere's another line.\n"
-          },
-          {
-            name: :no_name_given,
-            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
-            status: :fail,
-            message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
-            output: "The name is fred.\nHere's another line.\n"
           }
         ]
       }
@@ -77,10 +100,10 @@ Traceback (most recent call first):
         message: nil,
         tests: [
           {
-            name: :no_name_given,
+            name: "No name given",
             test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
             status: :error,
-            message: message
+            message:
           }
         ]
       }
@@ -108,7 +131,7 @@ Traceback (most recent call first):
         ,'This is meant to be a syntax...
         ^
       SYNTAX_ERRORS
-      assert_equal expected.strip, actual['message']
+      assert_equal expected, actual['message']
 
       assert_test_run_exited_cleanly
     end
@@ -124,7 +147,7 @@ Traceback (most recent call first):
         end,A stray comma
            ^
       SYNTAX_ERRORS
-      assert_equal expected.strip, actual['message']
+      assert_equal expected, actual['message']
 
       assert_test_run_exited_cleanly
     end

@@ -41,13 +41,12 @@ class Minitest::Test
   end
 
   def with_tmp_dir_for_fixture(fixture)
-    original_path = __dir__ + "/fixtures/#{fixture}/"
     tmp_path = SAFE_WRITE_PATH / SecureRandom.uuid
     input_dir = tmp_path / "input"
     output_dir = tmp_path / "output"
     FileUtils.mkdir_p(input_dir)
     FileUtils.mkdir_p(output_dir)
-    FileUtils.copy_entry(original_path + "input", input_dir)
+    FileUtils.copy_entry("#{__dir__}/fixtures/#{fixture}/input", input_dir)
 
     begin
       run_test_runner(input_dir, output_dir)
@@ -62,7 +61,7 @@ class Minitest::Test
     # exec("bin/run.sh two_fer #{input_dir} #{output_dir}")
     # system("bin/run.sh two_fer #{input_dir} #{output_dir}")
 
-    # Main command
+    # Production command
     system("bin/run.sh two_fer #{input_dir} #{output_dir}", out: "/dev/null", err: "/dev/null")
   end
 end

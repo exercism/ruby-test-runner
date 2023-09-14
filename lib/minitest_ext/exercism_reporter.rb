@@ -1,4 +1,4 @@
-module MiniTest
+module Minitest
   class ExercismReporter < AbstractReporter
     class << self
       attr_reader :instance
@@ -17,7 +17,7 @@ module MiniTest
     end
 
     def metadata=(metadata)
-      @metadata = metadata.each_with_object({}) do |md, hash| 
+      @metadata = metadata.each_with_object({}) do |md, hash|
         hash[md[:test]] = md
       end
     end
@@ -27,7 +27,7 @@ module MiniTest
     end
 
     def report
-      write_report(status, tests: tests.map(&:to_h))
+      write_report(status, tests: tests.sort_by(&:index).map(&:to_h))
     end
 
     def status
@@ -43,7 +43,7 @@ module MiniTest
           ExtractStandardExceptionErrorMessage.(e)
         end
 
-      write_report(:error, message: message)
+      write_report(:error, message:)
     end
 
     def report_written?
@@ -58,6 +58,8 @@ module MiniTest
     attr_reader :exercise, :path, :results, :tests, :user_output, :metadata
 
     def initialize(exercise, path)
+      super()
+
       @exercise = exercise
       @path = path
       @tests = []
@@ -69,7 +71,7 @@ module MiniTest
     def write_report(status, tests: nil, message: nil)
       return if report_written?
 
-      TestRunner::WriteReport.(path, status, tests: tests, message: message)
+      TestRunner::WriteReport.(path, status, tests:, message:)
       @report_written = true
     end
 
@@ -98,6 +100,10 @@ module MiniTest
         return :error if result.error?
 
         result.failures.size == 0 ? :pass : :fail
+      end
+
+      def index
+        metadata[:index]
       end
 
       private

@@ -2,7 +2,7 @@ class TestRunner
   class ExtractTestMetadata < Parser::AST::Processor
     include Mandate
 
-    initialize_with :filelines, :test_node
+    initialize_with :filelines, :test_node, :index
 
     def call
       @ignore_line_numbers = []
@@ -18,7 +18,8 @@ class TestRunner
       {
         test: test_identifier,
         name: test_name,
-        test_code: test_code
+        test_code:,
+        index:
       }
     end
 
@@ -42,7 +43,8 @@ class TestRunner
     # TODO: Make this a bit prettier.
     memoize
     def test_name
-      test_node.method_name.to_s.gsub("test_", "")
+      test_node.method_name.to_s.gsub("test_", "").
+        tr("_", " ").capitalize
     end
 
     # This builds up the command part. Simply put the algorithm is:
@@ -54,9 +56,10 @@ class TestRunner
       body_line_numbers = ((test_node.first_line + 1)..(test_node.last_line - 1))
 
       # Map through those lines, skipping any that were
-      # part of assertionions
+      # part of assertions
       test_code = body_line_numbers.map do |idx|
         next if ignore_line_numbers.include?(idx)
+
         c = code_for_line(idx)
 
         # Only return if it's not a skip comment
@@ -70,12 +73,12 @@ class TestRunner
     # Remove the minimum amount of leading whitespace
     # from all lines
     def clean_leading_whitespace(multiline)
-      min = multiline.lines.map {|line| line[/^\s*/].size}.min
+      min = multiline.lines.map { |line| line[/^\s*/].size }.min
       multiline.gsub(/^\s{#{min}}/, '')
     end
 
     # The parser returns 1-indexed line numbers. This
-    # function retreives them based on their 0-based equiv.
+    # function retrieves them based on their 0-based equiv.
     def code_for_line(one_indexed_idx)
       filelines[one_indexed_idx - 1]
     end

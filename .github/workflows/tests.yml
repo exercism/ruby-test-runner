@@ -1,46 +1,36 @@
 name: Tests
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: Tests
+    runs-on: ubuntu-22.04
 
     steps:
-      # Checkout using GitHub's checkout action
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
 
-      # Setup Ruby - this needs to match the version in the Gemfile
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@e27aee156d42e38ff8a4c2fc97b125c4087cbcc7
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226
         with:
-          ruby-version: 2.6.6
-          bundler-cache: true
+          install: true
 
-      # Setup code climate
-      - name: Setup Code Climate test-reporter
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
+      - name: Build Docker image and store in cache
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09
+        with:
+          context: .
+          push: false
+          load: true
+          tags: exercism/ruby-test-runner
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      # Run the tests
-      - name: Run Ruby tests
-        env:
-          CAPTURE_CODE_COVERAGE: true
-        run: |
-          bundle exec rake test
-          ./cc-test-reporter format-coverage -t simplecov -o codeclimate.backend.json coverage/backend/.resultset.json
-
-      # Publish the coverage to CodeClimate
-      - name: Publish code coverage
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        env:
-          GIT_BRANCH: ${GITHUB_REF/refs\/heads\//}
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-        run: |
-          ./cc-test-reporter upload-coverage -i codeclimate.*.json
+      - name: Run Tests in Docker
+        run: bin/run-tests-in-docker.sh
