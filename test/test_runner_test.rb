@@ -127,7 +127,7 @@ Traceback (most recent call first):
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
       expected = <<~SYNTAX_ERRORS
-        Line 3: syntax error, unexpected ',', expecting end-of-input
+        Line 3: syntax error, unexpected ','
         ,'This is meant to be a syntax...
         ^
       SYNTAX_ERRORS
