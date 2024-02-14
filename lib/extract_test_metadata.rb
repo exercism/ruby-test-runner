@@ -18,9 +18,9 @@ class TestRunner
       {
         test: test_identifier,
         name: test_name,
-        test_code: test_code,
-        index: index,
-        task_id: task_id
+        test_code:,
+        index:,
+        task_id:
       }
     end
 

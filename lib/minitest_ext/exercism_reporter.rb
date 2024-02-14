@@ -43,7 +43,7 @@ module Minitest
           ExtractStandardExceptionErrorMessage.(e)
         end
 
-      write_report(:error, message: message)
+      write_report(:error, message:)
     end
 
     def report_written?
@@ -71,7 +71,7 @@ module Minitest
     def write_report(status, tests: nil, message: nil)
       return if report_written?
 
-      TestRunner::WriteReport.(path, status, tests: tests, message: message)
+      TestRunner::WriteReport.(path, status, tests:, message:)
       @report_written = true
     end
 

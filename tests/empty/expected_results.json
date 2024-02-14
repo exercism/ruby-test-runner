@@ -1,0 +1,1 @@
+{"version":2,"status":"fail","message":null,"tests":[{"name":"No name given","test_code":"assert_equal \"One for you, one for me.\", TwoFer.two_fer","status":"error","message":"NameError: uninitialized constant TwoFerTest::TwoFer\n\nTraceback (most recent call first):\n    Line 7:in `test_no_name_given'"}]}

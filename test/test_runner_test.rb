@@ -111,7 +111,7 @@ Traceback (most recent call first):
             name: "No name given",
             test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
             status: :error,
-            message: message,
+            message:,
             task_id: nil
           }
         ]
@@ -136,7 +136,7 @@ Traceback (most recent call first):
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
       expected = <<~SYNTAX_ERRORS
-        Line 3: syntax error, unexpected ',', expecting end-of-input
+        Line 3: syntax error, unexpected ','
         ,'This is meant to be a syntax...
         ^
       SYNTAX_ERRORS

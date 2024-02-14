@@ -8,22 +8,28 @@ on:
 
 jobs:
   rubocop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939
+        uses: ruby/setup-ruby@22fdc77bf4148f810455b226c90fb81b5cbc00a7
         with:
-          ruby-version: 3.0.2
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Install gems
         run: |
-          gem install rubocop
-          gem install rubocop-minitest
-          gem install rubocop-performance
+          # Extract the exact versions of the rubocop gems from Gemfile.lock
+          rubocop_version=$(sed -n -E 's/^    rubocop \((.+)\)/\1/p' Gemfile.lock)
+          rubocop_minitest_version=$(sed -n -E 's/^    rubocop-minitest \((.+)\)/\1/p' Gemfile.lock)
+          rubocop_performance_version=$(sed -n -E 's/^    rubocop-performance \((.+)\)/\1/p' Gemfile.lock)
+
+          gem install rubocop -v $rubocop_version
+          gem install rubocop-minitest -v $rubocop_minitest_version
+          gem install rubocop-performance -v $rubocop_performance_version
 
       - name: Run Rubocop
         run: rubocop --except Metrics
