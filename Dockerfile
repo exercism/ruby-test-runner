@@ -5,7 +5,7 @@ RUN apk update && apk upgrade && \
 
 COPY Gemfile Gemfile.lock .
 
-RUN gem install bundler:2.4.18 && \
+RUN gem install bundler && \
     bundle config set without 'development test' && \
     bundle install
 
