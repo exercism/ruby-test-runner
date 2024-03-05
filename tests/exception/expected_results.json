@@ -1,1 +1,1 @@
-{"version":2,"status":"pass","message":null,"tests":[]}
+{"version":2,"status":"error","message":"Line 3: undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)","tests":null}
