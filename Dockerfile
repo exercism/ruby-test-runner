@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-alpine3.18 AS build
+FROM ruby:3.3.0-alpine3.18 AS build
 
 RUN apk update && apk upgrade && \
     apk add --no-cache git openssh build-base gcc wget git
@@ -9,7 +9,7 @@ RUN gem install bundler:2.4.18 && \
     bundle config set without 'development test' && \
     bundle install
 
-FROM ruby:3.2.2-alpine3.18
+FROM ruby:3.3.0-alpine3.18
 
 RUN apk add --no-cache bash
 
