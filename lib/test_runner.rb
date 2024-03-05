@@ -39,7 +39,7 @@ class TestRunner
     Minitest::PrideIO.pride!
 
     Dir.glob("#{input_path}/*_test.rb").sort.each do |test_file|
-      reporter.set_metadata(test_file, ExtractMetadata.(test_file))
+      reporter.metadata = ExtractMetadata.(test_file)
 
       begin
         require test_file

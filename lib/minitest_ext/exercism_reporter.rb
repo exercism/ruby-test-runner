@@ -16,15 +16,14 @@ module Minitest
       reset_user_output
     end
 
-    def set_metadata(test_file, metadata)
-      @metadata[test_file] = metadata.each_with_object({}) do |md, hash|
+    def metadata=(metadata)
+      @metadata = metadata.each_with_object({}) do |md, hash|
         hash[md[:test]] = md
       end
     end
 
     def record(result)
-      test_metadata = metadata[result.source_location.first][result.name]
-      tests << TestResult.new(result, user_output, test_metadata)
+      tests << TestResult.new(result, user_output, metadata[result.name])
     end
 
     def report
@@ -65,7 +64,6 @@ module Minitest
       @path = path
       @tests = []
       @report_written = false
-      @metadata = {}
 
       reset_user_output
     end
