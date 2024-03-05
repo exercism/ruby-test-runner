@@ -85,7 +85,7 @@ class TestRunnerTest < Minitest::Test
 
   def test_deep_exception
     message = "
-NoMethodError: undefined method `non_existant_method' for nil
+NoMethodError: undefined method `non_existant_method' for nil:NilClass
 
 Traceback (most recent call first):
     Line 8:in `work_out_name'
@@ -115,7 +115,7 @@ Traceback (most recent call first):
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
 
-      expected = "Line 3: undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main (NameError)"
+      expected = "Line 3: undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main:Object (NameError)"
       assert_equal expected, actual['message']
 
       assert_test_run_exited_cleanly
