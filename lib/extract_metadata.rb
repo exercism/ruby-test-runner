@@ -30,7 +30,7 @@ class TestRunner
     end
 
     def on_def(node)
-      return unless node.method_name.to_s.start_with?("test_", "bench_")
+      return unless node.method_name.to_s.start_with?("test_")
 
       tests << ExtractTestMetadata.(filelines, node, @num_tests)
       @num_tests += 1

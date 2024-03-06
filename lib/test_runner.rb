@@ -39,6 +39,8 @@ class TestRunner
     Minitest::PrideIO.pride!
 
     Dir.glob(File.join(input_path, "*_test.rb")).sort.each do |test_file|
+      next if test_file.end_with?("_benchmark_test.rb")
+
       reporter.set_metadata(test_file, ExtractMetadata.(test_file))
 
       begin
