@@ -38,7 +38,7 @@ class TestRunner
     Minitest::Test.use_order_dependent_tests!
     Minitest::PrideIO.pride!
 
-    Dir.glob("#{input_path}/*_test.rb").sort.each do |test_file|
+    Dir.glob(File.join(input_path, "*_test.rb")).sort.each do |test_file|
       reporter.set_metadata(test_file, ExtractMetadata.(test_file))
 
       begin
