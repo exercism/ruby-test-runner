@@ -38,6 +38,19 @@ class ExtractMetadataTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_debug
+    expected = [{
+      test: "test_debug_works_properly",
+      name: "Debug works properly",
+      test_code: 'debug "Hello!"'
+      index: 0
+    }]
+
+    actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/debug.rb", __dir__))
+    assert_equal expected, actual
+  end
+
+
   def test_extracting_indices
     expected = [
       {
