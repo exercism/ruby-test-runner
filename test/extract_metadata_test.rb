@@ -42,7 +42,7 @@ class ExtractMetadataTest < Minitest::Test
     expected = [{
       test: "test_debug_works_properly",
       name: "Debug works properly",
-      test_code: 'debug "Hello!"'
+      test_code: 'debug "Hello!"',
       index: 0
     }]
 
