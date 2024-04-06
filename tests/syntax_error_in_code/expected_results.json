@@ -1,1 +1,1 @@
-{"version":3,"status":"pass","message":null,"tests":[]}
+{"version":3,"status":"error","message":"Line 2: syntax error, unexpected ',', expecting end-of-input\nend,A stray comma\n   ^\n","tests":null}

@@ -5,10 +5,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '3.2.2'
+ruby '3.3.0'
 
 gem "mandate", "~> 1.0.0"
 gem 'rake'
+gem 'mutex_m'
 gem 'json', '~> 2.6.1'
 gem 'minitest', '~> 5.11.3'
 

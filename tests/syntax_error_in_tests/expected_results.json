@@ -1,1 +1,1 @@
-{"version":3,"status":"pass","message":null,"tests":[]}
+{"version":3,"status":"error","message":"Line 3: syntax error, unexpected ','\n,'This is meant to be a syntax...\n^\n","tests":null}
