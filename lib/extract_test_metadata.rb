@@ -93,6 +93,7 @@ class TestRunner
       filelines[one_indexed_idx - 1]
     end
 
+    memoize
     def body_line_numbers
       # Get the lines excluding the first (def) and last (end)
       ((test_node.first_line + 1)..(test_node.last_line - 1))
