@@ -7,7 +7,8 @@ class ExtractMetadataTest < Minitest::Test
       test: "test_assert_equal_works_properly",
       name: "Assert equal works properly",
       test_code: %(some_result = TwoFer.two_fer\nassert_equal "One for you, one for me.", some_result),
-      index: 0
+      index: 0,
+      task_id: 123
     }]
 
     actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/assert_equal.rb", __dir__))
@@ -19,7 +20,8 @@ class ExtractMetadataTest < Minitest::Test
       test: "test_skip_works_properly",
       name: "Skip works properly",
       test_code: "something = \"Something\"\nassert something.present?",
-      index: 0
+      index: 0,
+      task_id: 456
     }]
 
     actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/skip.rb", __dir__))
@@ -31,7 +33,8 @@ class ExtractMetadataTest < Minitest::Test
       test: "test_skip_works_properly",
       name: "Skip works properly",
       test_code: "something = \"Something\"\nassert something.present?",
-      index: 0
+      index: 0,
+      task_id: 789
     }]
 
     actual = TestRunner::ExtractMetadata.(File.expand_path("fixtures/metadata/skip_comment.rb", __dir__))
@@ -44,25 +47,29 @@ class ExtractMetadataTest < Minitest::Test
         test: "test_zebra",
         name: "Zebra",
         test_code: %(some_result = TwoFer.two_fer("zebra")\nassert_equal "One for you, one for zebra.", some_result),
-        index: 0
+        index: 0,
+        task_id: 789
       },
       {
         test: "test_anaconda",
         name: "Anaconda",
         test_code: %(some_result = TwoFer.two_fer("anaconda")\nassert_equal "One for you, one for anaconda.", some_result),
-        index: 1
+        index: 1,
+        task_id: nil
       },
       {
         test: "test_gorilla",
         name: "Gorilla",
         test_code: %(some_result = TwoFer.two_fer("gorilla")\nassert_equal "One for you, one for gorilla.", some_result),
-        index: 2
+        index: 2,
+        task_id: nil
       },
       {
         test: "test_boa",
         name: "Boa",
         test_code: %(some_result = TwoFer.two_fer("boa")\nassert_equal "One for you, one for boa.", some_result),
-        index: 3
+        index: 3,
+        task_id: nil
       }
     ]
 
