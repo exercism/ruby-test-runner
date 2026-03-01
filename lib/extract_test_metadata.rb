@@ -19,7 +19,8 @@ class TestRunner
         test: test_identifier,
         name: test_name,
         test_code:,
-        index:
+        index:,
+        task_id:
       }
     end
 
@@ -52,9 +53,6 @@ class TestRunner
     # - Plus an bits we've chosen to add back as the test_code part
     memoize
     def test_code
-      # Get the lines excluding the first (def) and last (end)
-      body_line_numbers = ((test_node.first_line + 1)..(test_node.last_line - 1))
-
       # Map through those lines, skipping any that were
       # part of assertions
       test_code = body_line_numbers.map do |idx|
@@ -63,11 +61,23 @@ class TestRunner
         c = code_for_line(idx)
 
         # Only return if it's not a skip comment
-        c.start_with?(/\s*#\s*skip/) ? nil : c
+        c.start_with?(/\s*#\s*skip/, /\s*###\s*task_id/) ? nil : c
       end.compact.join("").rstrip
 
       # Align everything to the left as the final step
       clean_leading_whitespace(test_code)
+    end
+
+    memoize
+    def task_id
+      body_line_numbers.map do |idx|
+        next if ignore_line_numbers.include?(idx)
+
+        c = code_for_line(idx)
+        # Find a line started with `### task_id` and get the number
+        ch_task_id = /\s*###\s*task_id/
+        c.chomp.strip.delete('### task_id:').to_i if c.start_with?(ch_task_id)
+      end.compact.first
     end
 
     # Remove the minimum amount of leading whitespace
@@ -81,6 +91,12 @@ class TestRunner
     # function retrieves them based on their 0-based equiv.
     def code_for_line(one_indexed_idx)
       filelines[one_indexed_idx - 1]
+    end
+
+    memoize
+    def body_line_numbers
+      # Get the lines excluding the first (def) and last (end)
+      ((test_node.first_line + 1)..(test_node.last_line - 1))
     end
   end
 end
