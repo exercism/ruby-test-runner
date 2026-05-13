@@ -1,1 +1,1 @@
-{"version":2,"status":"error","message":"Line 3: syntax error, unexpected ','\n,'This is meant to be a syntax...\n^\n","tests":null}
+{"version":2,"status":"error","message":"Line 3: syntax error found\n  1 | require 'minitest/autorun'\n  2 | \n> 3 | ,'This is meant to be a syntax  ...\n    | ^ unexpected ',', ignoring it\n","tests":null}
