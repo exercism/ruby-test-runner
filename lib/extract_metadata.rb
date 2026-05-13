@@ -1,5 +1,5 @@
 require 'rubocop/ast'
-require 'parser/current'
+require 'prism'
 
 # This class takes a test file, gets its AST, and
 # looks for tests (def test_...). Each of these then
@@ -14,9 +14,7 @@ class TestRunner
     def call
       @filelines = File.readlines(filepath)
       @num_tests = 0
-      buffer = Parser::Source::Buffer.new('', source: filelines.join)
-      builder = RuboCop::AST::Builder.new
-      ast = Parser::CurrentRuby.new(builder).parse(buffer)
+      ast = Prism::Translation::RubyParser.parse_file(filepath)
 
       @tests = []
 
