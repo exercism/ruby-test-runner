@@ -1,1 +1,1 @@
-{"version":2,"status":"error","message":"Line 2: syntax error, unexpected ',', expecting end-of-input\nend,A stray comma\n   ^\n","tests":null}
+{"version":2,"status":"error","message":"Line 2: syntax errors found\n  1 | module TwoFer\n> 2 | end,A stray comma\n    |    ^ unexpected ',', ignoring it\n    |    ^ unexpected ',', expecting end-of-input\n","tests":null}
