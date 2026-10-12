@@ -13,7 +13,6 @@ require "mocha/minitest"
 require 'securerandom'
 require 'json'
 require 'English'
-require 'pathname'
 
 class Minitest::Test
   SAFE_WRITE_PATH = Pathname.new('/tmp')
