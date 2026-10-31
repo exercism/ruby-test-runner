@@ -5,24 +5,27 @@ class TestRunnerTest < Minitest::Test
     assert_fixture(
       :pass,
       {
-        version: 2,
+        version: 3,
         status: :pass,
         message: nil,
         tests: [
           {
             name: "No name given",
             status: :pass,
-            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer)
+            test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
+            task_id: nil
           },
           {
             name: 'A name given',
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
-            status: :pass
+            status: :pass,
+            task_id: nil
           },
           {
             name: "Another name given",
             status: :pass,
-            test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")'
+            test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
+            task_id: nil
           }
         ]
       }
@@ -33,19 +36,21 @@ class TestRunnerTest < Minitest::Test
     assert_fixture(
       :pass_ruby_3_syntax,
       {
-        version: 2,
+        version: 3,
         status: :pass,
         message: nil,
         tests: [
           {
             name: "Rightward assign",
             status: :pass,
-            test_code: %(assert_equal Ruby3Syntax.rightward_assign, 'is fun')
+            test_code: %(assert_equal Ruby3Syntax.rightward_assign, 'is fun'),
+            task_id: nil
           },
           {
             name: "Endless method def",
             status: :pass,
-            test_code: %(assert_equal Ruby3Syntax.endless_methods, 'are fun')
+            test_code: %(assert_equal Ruby3Syntax.endless_methods, 'are fun'),
+            task_id: nil
           }
         ]
       }
@@ -55,7 +60,7 @@ class TestRunnerTest < Minitest::Test
   def test_fail
     assert_fixture(
       :fail, {
-        version: 2,
+        version: 3,
         status: :fail,
         message: nil,
         tests: [
@@ -64,19 +69,22 @@ class TestRunnerTest < Minitest::Test
             test_code: %(assert_equal "One for you, one for me.", TwoFer.two_fer),
             status: :fail,
             message: %(Expected: \"One for you, one for me.\"\n  Actual: \"One for fred, one for me.\"),
-            output: "The name is fred.\nHere's another line.\n"
+            output: "The name is fred.\nHere's another line.\n",
+            task_id: nil
           },
           {
             name: "A name given",
             test_code: 'assert_equal "One for Alice, one for me.", TwoFer.two_fer("Alice")',
             status: :pass,
-            output: "The name is Alice.\nHere's another line.\n"
+            output: "The name is Alice.\nHere's another line.\n",
+            task_id: nil
           },
           {
             name: "Another name given",
             test_code: 'assert_equal "One for Bob, one for me.", TwoFer.two_fer("Bob")',
             status: :pass,
-            output: "The name is Bob.\nHere's another line.\n"
+            output: "The name is Bob.\nHere's another line.\n",
+            task_id: nil
           }
         ]
       }
@@ -95,7 +103,7 @@ Traceback (most recent call first):
     assert_fixture(
       :deep_exception,
       {
-        version: 2,
+        version: 3,
         status: :fail,
         message: nil,
         tests: [
@@ -103,7 +111,8 @@ Traceback (most recent call first):
             name: "No name given",
             test_code: 'assert_equal "One for you, one for me.", TwoFer.two_fer',
             status: :error,
-            message:
+            message:,
+            task_id: nil
           }
         ]
       }
