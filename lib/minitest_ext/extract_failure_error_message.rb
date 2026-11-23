@@ -17,8 +17,10 @@ class ExtractFailureErrorMessage
     "#{err_msg}\n\nTraceback (most recent call first):\n#{trace}"
   end
 
+  # Minitest 5.27 shortens paths under the working directory in the
+  # backtrace, but not in the location, so match the shortened path.
   memoize
   def solution_filepath
-    failure.location.split(":").first
+    failure.location.split(":").first.delete_prefix("#{Dir.pwd}/")
   end
 end

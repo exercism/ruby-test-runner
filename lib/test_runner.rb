@@ -1,7 +1,13 @@
 require 'mandate'
 require 'json'
 
-gem 'minitest'
+# Ruby 4.0 ships Minitest 6 as a bundled gem. Activate the Minitest 5
+# installed from the Gemfile, so the tests behave as they did before.
+gem 'minitest', '~> 5.27'
+
+# Minitest would otherwise load every plugin it finds in any installed gem,
+# including Minitest 6's. The runner registers the plugins it uses itself.
+ENV["MT_NO_PLUGINS"] = "1"
 require "minitest/autorun"
 require "minitest/pride_plugin"
 

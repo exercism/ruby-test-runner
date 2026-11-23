@@ -31,9 +31,7 @@ GEM
     logger (1.7.0)
     mandate (2.2.0)
     method_source (1.1.0)
-    minitest (6.0.6)
-      drb (~> 2.0)
-      prism (~> 1.5)
+    minitest (5.27.0)
     minitest-stub-const (0.6)
     mocha (3.1.0)
       ruby2_keywords (>= 0.0.5)
@@ -98,7 +96,7 @@ DEPENDENCIES
   activesupport
   json
   mandate
-  minitest
+  minitest (~> 5.27)
   minitest-stub-const
   mocha
   mutex_m
