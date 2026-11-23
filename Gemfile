@@ -7,18 +7,21 @@ end
 
 ruby file: '.ruby-version'
 
-gem 'activesupport'
 gem 'json'
 gem 'mandate'
 gem 'minitest', '~> 5.27'
-gem 'minitest-stub-const'
-gem 'mocha'
 gem 'mutex_m'
-gem 'pry'
 gem 'rake'
-gem 'rubocop'
-gem 'rubocop-ast'
-gem 'rubocop-minitest'
-gem 'rubocop-performance'
-gem 'sexp_processor'
-gem 'simplecov', '~> 0.17.0'
+
+group :test do
+  gem 'activesupport'
+  gem 'minitest-stub-const'
+  gem 'mocha'
+  gem 'pry'
+  gem 'rubocop'
+  gem 'rubocop-ast'
+  gem 'rubocop-minitest'
+  gem 'rubocop-performance'
+  gem 'sexp_processor'
+  gem 'simplecov', '~> 0.17.0'
+end
