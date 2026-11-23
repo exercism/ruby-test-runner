@@ -85,11 +85,11 @@ class TestRunnerTest < Minitest::Test
 
   def test_deep_exception
     message = "
-NoMethodError: undefined method `non_existant_method' for nil
+NoMethodError: undefined method 'non_existant_method' for nil
 
 Traceback (most recent call first):
-    Line 8:in `work_out_name'
-    Line 3:in `two_fer'
+    Line 8:in 'TwoFer.work_out_name'
+    Line 3:in 'TwoFer.two_fer'
 ".strip
 
     assert_fixture(
@@ -115,7 +115,7 @@ Traceback (most recent call first):
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
 
-      expected = "Line 3: undefined local variable or method `raise_an_error_because_i_am_a_random_method' for main (NameError)"
+      expected = "Line 3: undefined local variable or method 'raise_an_error_because_i_am_a_random_method' for main (NameError)"
       assert_equal expected, actual['message']
 
       assert_test_run_exited_cleanly
@@ -127,9 +127,11 @@ Traceback (most recent call first):
       actual = JSON.parse(File.read(output_dir / "results.json"))
       assert_equal "error", actual["status"]
       expected = <<~SYNTAX_ERRORS
-        Line 3: syntax error, unexpected ','
-        ,'This is meant to be a syntax...
-        ^
+        Line 3: syntax error found
+          1 | require 'minitest/autorun'
+          2 |#{' '}
+        > 3 | ,'This is meant to be a syntax  ...
+            | ^ unexpected ',', ignoring it
       SYNTAX_ERRORS
       assert_equal expected, actual['message']
 
@@ -143,9 +145,11 @@ Traceback (most recent call first):
       assert_equal "error", actual["status"]
 
       expected = <<~SYNTAX_ERRORS
-        Line 2: syntax error, unexpected ',', expecting end-of-input
-        end,A stray comma
-           ^
+        Line 2: syntax errors found
+          1 | module TwoFer
+        > 2 | end,A stray comma
+            |    ^ unexpected ',', ignoring it
+            |    ^ unexpected ',', expecting end-of-input
       SYNTAX_ERRORS
       assert_equal expected, actual['message']
 
