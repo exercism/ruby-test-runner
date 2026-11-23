@@ -105,10 +105,14 @@ DEPENDENCIES
   pry
   rake
   rubocop
+  rubocop-ast
   rubocop-minitest
   rubocop-performance
   sexp_processor
   simplecov (~> 0.17.0)
+
+RUBY VERSION
+  ruby 4.0.10
 
 BUNDLED WITH
   4.0.11
