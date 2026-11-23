@@ -1,5 +1,5 @@
 class TestRunner
-  class ExtractTestMetadata < Parser::AST::Processor
+  class ExtractTestMetadata < Prism::Visitor
     include Mandate
 
     initialize_with :filelines, :test_node, :index
@@ -8,10 +8,10 @@ class TestRunner
       @ignore_line_numbers = []
 
       # Generate the data by taking a look at the AST.
-      # This method causes multiple calls of the on_send
-      # one for each time a method is invoked in the test class.
+      # This method causes multiple calls of visit_call_node,
+      # one for each time a method is invoked in the test.
       # For example, when we call assert, or skip
-      process(test_node)
+      test_node.accept(self)
 
       # Now all the data is collected, just piece it together
       # into a nice hash which can be merged into the test results
@@ -23,13 +23,14 @@ class TestRunner
       }
     end
 
-    def on_send(node)
-      # This method will get called for all the nodes that get called on the
-      # test class. We only care about skip lines for now, so leave the others alone.
-      return unless node.method_name == :skip
+    def visit_call_node(node)
+      # This method will get called for all the method calls in the test.
+      # We only care about skip lines for now, so leave the others alone.
+      return super unless node.name == :skip
 
       # Add any line numbers covered by the skip to the ignore block
-      @ignore_line_numbers += (node.first_line..node.last_line).to_a
+      location = node.location
+      @ignore_line_numbers += (location.start_line..location.end_line).to_a
     end
 
     private
@@ -37,13 +38,13 @@ class TestRunner
 
     memoize
     def test_identifier
-      test_node.method_name.to_s
+      test_node.name.to_s
     end
 
     # TODO: Make this a bit prettier.
     memoize
     def test_name
-      test_node.method_name.to_s.gsub("test_", "").
+      test_node.name.to_s.gsub("test_", "").
         tr("_", " ").capitalize
     end
 
@@ -53,7 +54,8 @@ class TestRunner
     memoize
     def test_code
       # Get the lines excluding the first (def) and last (end)
-      body_line_numbers = ((test_node.first_line + 1)..(test_node.last_line - 1))
+      location = test_node.location
+      body_line_numbers = ((location.start_line + 1)..(location.end_line - 1))
 
       # Map through those lines, skipping any that were
       # part of assertions
