@@ -13,9 +13,6 @@ gem 'mutex_m'
 gem 'json', '~> 2.6.1'
 gem 'minitest', '~> 5.11.3'
 
-gem 'parser'
-gem 'rubocop-ast'
-
 group :test do
   gem 'mocha'
   gem 'pry'

@@ -61,11 +61,9 @@ DEPENDENCIES
   minitest (~> 5.11.3)
   mocha
   mutex_m
-  parser
   pry
   rake
   rubocop
-  rubocop-ast
   rubocop-minitest
   rubocop-performance
   simplecov (~> 0.17.0)

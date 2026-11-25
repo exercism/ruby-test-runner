@@ -1,12 +1,14 @@
-require 'rubocop/ast'
-require 'parser/current'
+# Prism ships with Ruby, so this needs no gems. Loading it takes a
+# fraction of the time of the parser and rubocop-ast gems, which made
+# up most of every run's start-up.
+require 'prism'
 
 # This class takes a test file, gets its AST, and
 # looks for tests (def test_...). Each of these then
 # gets passed into the ExtractTestMetadata.() command
 # to get its metadata.
 class TestRunner
-  class ExtractMetadata < Parser::AST::Processor
+  class ExtractMetadata < Prism::Visitor
     include Mandate
 
     initialize_with :filepath
@@ -14,23 +16,21 @@ class TestRunner
     def call
       @filelines = File.readlines(filepath)
       @num_tests = 0
-      buffer = Parser::Source::Buffer.new('', source: filelines.join)
-      builder = RuboCop::AST::Builder.new
-      ast = Parser::CurrentRuby.new(builder).parse(buffer)
+      ast = Prism.parse(filelines.join).value
 
       @tests = []
 
-      # Process starts an AST parse. Whenever a `def` node is hit
-      # the on_def method below is called. This is how AST parsing
-      # works via the parser gem.
-      process(ast)
+      # Visiting the AST calls the visit_def_node method below
+      # whenever a `def` node is hit.
+      ast.accept(self)
 
       # We've extracted all the tests, so now return them.
       tests
     end
 
-    def on_def(node)
-      return unless node.method_name.to_s.start_with?("test_")
+    def visit_def_node(node)
+      return if node.receiver
+      return unless node.name.to_s.start_with?("test_")
 
       tests << ExtractTestMetadata.(filelines, node, @num_tests)
       @num_tests += 1
